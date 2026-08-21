@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "../ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   list: Banner[]
@@ -15,7 +15,7 @@ export const Banners = ({ list }: Props) => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
 
-  const delay = 6000 //6s
+  const delay = 6500 //6s
 
   const [autoplay] = useState(() =>
     Autoplay({ delay: delay, stopOnInteraction: false })
