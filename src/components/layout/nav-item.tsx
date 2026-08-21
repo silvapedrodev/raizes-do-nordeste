@@ -19,7 +19,7 @@ export const NavItem = ({ href, label, icon }: NavItemProps) => {
     <li className="w-full py-1">
       <Link href={href} className="flex flex-col items-center gap-1">
         <Icon
-          size={28}
+          size={24}
           className={`${isActive
             ? 'font-bold text-primary-main'
             : 'font-medium text-gray-500 '
