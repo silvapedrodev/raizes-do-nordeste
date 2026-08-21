@@ -54,7 +54,7 @@ export const Banners = ({ list }: Props) => {
                   alt={banner.alt}
                   width={1280}
                   height={408}
-                  className="w-full h-auto rounded-2xl"
+                  className="w-full h-40 sm:h-auto object-cover object-center rounded-2xl"
                 />
               </Link>
             </CarouselItem>

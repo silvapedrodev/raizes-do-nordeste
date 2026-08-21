@@ -4,7 +4,7 @@ export const MobileNav = () => {
   return (
     <nav
       aria-label="Navegação principal"
-      className="md:hidden fixed bottom-0 left-0 right-0 px-6 z-50 border-t border-gray-200"
+      className="md:hidden fixed bottom-0 left-0 right-0 px-6 z-50 border-t bg-white border-gray-200"
     >
       <ul className="flex gap-3">
         <NavItem
