@@ -51,6 +51,7 @@ export const QuickLinks = () => {
                     src={item.img}
                     alt={item.label}
                     fill
+                    sizes="(max-width: 768px) 120px"
                     className="object-contain"
                   />
                 </div>
