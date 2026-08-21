@@ -5,7 +5,9 @@ export default function SiteLayout({ children }: LayoutProps<"/">) {
   return (
     <div>
       <Header />
-      {children}
+      <main className="w-full max-w-7xl mx-auto px-6 mt-6 md:mt-10">
+        {children}
+      </main>
       <MobileNav />
     </div>
   );
