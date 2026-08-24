@@ -20,7 +20,7 @@ export function Header() {
           <div className="flex shrink-0 items-center gap-6 md:gap-8">
             <Link href="/">
               <Image
-                src="assets/ui/logo.svg"
+                src="/assets/ui/logo.svg"
                 alt="Raízes do Nordeste"
                 width={92}
                 height={32}

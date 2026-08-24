@@ -4,22 +4,22 @@ import Link from "next/link";
 const categories = [
   {
     label: "Café da manhã",
-    href: "#",
+    href: "cafe-da-manha",
     img: '/assets/ui/cafe-da-manha.svg'
   },
   {
     label: "Almoço",
-    href: "#",
+    href: "almoco",
     img: '/assets/ui/arrumadinho.svg'
   },
   {
     label: "Sobremesas",
-    href: "#",
+    href: "sobremesa",
     img: '/assets/ui/bolo-de-rolo.svg'
   },
   {
     label: "Bebidas",
-    href: "#",
+    href: "bebida",
     img: '/assets/ui/bebida.svg'
   },
 ];
@@ -30,7 +30,7 @@ export const CategoryNav = () => {
       <div className="max-w-[460px] mx-auto flex justify-between items-center">
         {categories.map((item, index) => (
           <Link
-            href={item.href}
+            href={`/cardapio/${item.href}`}
             key={index}
             className="flex flex-col gap-2 items-center group"
           >

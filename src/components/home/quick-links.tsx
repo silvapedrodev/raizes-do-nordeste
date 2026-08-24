@@ -4,22 +4,22 @@ import Link from "next/link";
 const categories = [
   {
     label: "Combos",
-    href: "#",
+    href: "combo",
     img: '/assets/ui/combos.png'
   },
   {
     label: "Bolos",
-    href: "#",
+    href: "bolo",
     img: '/assets/ui/bolos.png'
   },
   {
     label: "Café",
-    href: "#",
+    href: "cafe",
     img: '/assets/ui/cafe.png'
   },
   {
     label: "Tapiocas",
-    href: "#",
+    href: "tapioca",
     img: '/assets/ui/tapiocas.png'
   },
 ];
@@ -33,7 +33,7 @@ export const QuickLinks = () => {
 
           return (
             <Link
-              href={item.href}
+              href={`/cardapio/${item.href}`}
               key={index}
               className="w-full md:flex-1"
             >
