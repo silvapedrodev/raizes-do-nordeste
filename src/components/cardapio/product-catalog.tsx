@@ -59,7 +59,7 @@ export const ProductCatalog = ({ categorySlug, data }: Props) => {
           <strong>{sortedProducts.length} </strong>
           {sortedProducts.length !== 1 ? 'Produtos' : 'Produto'}
         </div>
-        <div className="mt-4 md:mt-0">
+        <div className="mt-4 md:mt-0 ml-auto md:ml-0">
           <Select
             items={items}
             value={order}
