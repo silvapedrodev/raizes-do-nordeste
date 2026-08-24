@@ -1,5 +1,7 @@
 import { Banners } from "@/components/home/banners";
+import { BestSellers } from "@/components/home/best-sellers";
 import { CategoryNav } from "@/components/home/category-nav";
+import { DailyProducts } from "@/components/home/daily-products";
 import { ProductListSkeleton } from "@/components/home/product-list-skeleton";
 import { QuickLinks } from "@/components/home/quick-links";
 import { data } from "@/data/banners";
@@ -15,12 +17,12 @@ export default function Page() {
         <QuickLinks />
       </section>
 
-      <section>
+      <section className="mt-12 md:mt-20 space-y-6 md:space-y-10">
         <Suspense fallback={<ProductListSkeleton />}>
-          {/* Mais Vendidos */}
+          <BestSellers />
         </Suspense>
         <Suspense fallback={<ProductListSkeleton />}>
-          {/* Prato do Dia */}
+          <DailyProducts />
         </Suspense>
       </section>
     </div>
