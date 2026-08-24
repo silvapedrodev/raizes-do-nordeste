@@ -94,7 +94,7 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="mb-14 md:mb-0 mt-6 flex gap-2 items-center">
+      <div className="pb-10 md:pb-0 md:mb-0 mt-6 flex gap-2 items-center">
         <Image
           src={"/assets/ui/logo-2.svg"}
           alt="Raízes do Nordeste"

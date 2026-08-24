@@ -4,9 +4,9 @@ import { MobileNav } from "@/components/layout/mobile-nav";
 
 export default function SiteLayout({ children }: LayoutProps<"/">) {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="w-full max-w-7xl mx-auto px-6 mt-6 md:mt-10">
+      <main className="w-full max-w-7xl mx-auto px-6 mt-6 md:mt-10 flex-1 flex flex-col">
         {children}
       </main>
       <Footer />
