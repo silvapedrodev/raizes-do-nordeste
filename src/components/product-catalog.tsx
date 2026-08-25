@@ -15,6 +15,8 @@ import { Product } from "@/types/product";
 type Props = {
   categorySlug: string;
   data: Product[]
+  initialProducts?: Product[];
+  isSearch?: boolean;
 };
 
 const items = [
@@ -23,25 +25,34 @@ const items = [
   { label: "A-Z", value: "alphabetical" },
 ]
 
-export const ProductCatalog = ({ categorySlug, data }: Props) => {
+type AllowedOrder = typeof items[number]["value"];
+const ALLOWED_ORDERS: AllowedOrder[] = ["views", "selling", "alphabetical"];
+
+export const ProductCatalog = ({ categorySlug, data, initialProducts, isSearch }: Props) => {
   const queryString = UseQuerystring();
 
-  const order = queryString.get('order') ?? 'views';
+  const rawOrder = queryString.get('order');
+
+  const order: AllowedOrder = ALLOWED_ORDERS.includes(rawOrder as AllowedOrder)
+    ? (rawOrder as AllowedOrder)
+    : 'views'
 
   const handleSelectChanged = (value: string | null) => {
     if (!value) return;
-    queryString.set('order', value)
+    if (ALLOWED_ORDERS.includes(value as AllowedOrder)) {
+      queryString.set('order', value);
+    }
   }
 
   // TODO: Substituir a filtragem e ordenação mockada local por uma chamada de API ou query no banco de dados passando categorySlug e order.
 
-  const filteredProducts = data.filter(item => {
+  const baseProducts = initialProducts || data.filter(item => {
     const matchCategory = item.categories.includes(categorySlug);
     const matchTag = item.tags?.includes(categorySlug);
     return matchCategory || matchTag;
   });
 
-  const sortedProducts = [...filteredProducts].sort((productA, productB) => {
+  const sortedProducts = [...baseProducts].sort((productA, productB) => {
     if (order === "selling") {
       return productA.price - productB.price;
     }
@@ -81,7 +92,6 @@ export const ProductCatalog = ({ categorySlug, data }: Props) => {
         </div>
       </div>
 
-      {/* Grid de produtos filtrados e ordenados */}
       {sortedProducts.length > 0 ? (
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
           {sortedProducts.map(item => (
@@ -90,7 +100,7 @@ export const ProductCatalog = ({ categorySlug, data }: Props) => {
         </div>
       ) : (
         <div className="mt-12 text-center text-gray-500 py-12 bg-gray-50 rounded-xl border border-dashed border-gray-200">
-          Nenhum produto encontrado nesta categoria.
+          Nenhum produto encontrado.
         </div>
       )}
     </div >

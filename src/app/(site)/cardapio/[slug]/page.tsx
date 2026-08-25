@@ -1,5 +1,5 @@
 
-import { ProductCatalog } from "@/components/cardapio/product-catalog";
+import { ProductCatalog } from "@/components/product-catalog";
 import { products } from "@/data/product";
 import Link from "next/link";
 
