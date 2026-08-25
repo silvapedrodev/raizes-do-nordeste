@@ -18,7 +18,7 @@ export default async function ProductPage({ params }: Props) {
 
   const product = products.find((item) => formatSlug(item.slug) === formatSlug(slug))
 
-  if (!product) {
+  if (!product || product.status === "inactive") {
     redirect('/')
   }
 

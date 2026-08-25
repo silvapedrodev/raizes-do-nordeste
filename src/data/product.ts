@@ -222,6 +222,48 @@ export const products: Product[] = [
     },
     status: "active",
   },
+
+  {
+    id: "prod-007",
+    slug: "canjica-cremosa",
+    name: "Canjica Cremosa",
+    images: {
+      main: "https://images.unsplash.com/photo-1599785209707-a456fc1337bb?q=80&w=800&auto=format&fit=crop",
+      gallery: [
+        "/assets/products/canjica-cremosa-01.webp",
+        "/assets/products/canjica-cremosa-02.webp",
+      ],
+    },
+    description:
+      "Canjica de milho branco cozida lentamente com leite, leite condensado, coco e canela.",
+    price: 12.9,
+    categories: [
+      "sobremesa",
+      "festa-junina",
+    ],
+    tags: [
+      "festa junina",
+      "tradicional",
+      "sazonal",
+    ],
+    rating: {
+      average: 4.8,
+      count: 387,
+    },
+    nutrition: {
+      calories: 320,
+      protein: 7,
+      carbohydrates: 48,
+      fat: 11,
+    },
+    preparationTimeMinutes: 10,
+    availability: {
+      type: "seasonal",
+      startDate: "01/06/2027",
+      endDate: "31/07/2027",
+    },
+    status: "inactive",
+  },
 ];
 
 export const product: Product = {

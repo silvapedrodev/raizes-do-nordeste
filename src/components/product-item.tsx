@@ -5,12 +5,17 @@ import { formatPrice } from "@/utils/format-price";
 import { Plus, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { ProductItemLocked } from "@/components/product-item-locked";
 
 type Props = {
   data: Product;
 }
 
 export const ProductItem = ({ data }: Props) => {
+  if (data.status === "inactive") {
+    return <ProductItemLocked data={data} />;
+  }
+
   const link = `/produto/${data.slug}`
 
   const handleClick = () => {
