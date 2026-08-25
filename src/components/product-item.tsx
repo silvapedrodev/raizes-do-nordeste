@@ -49,7 +49,7 @@ export const ProductItem = ({ data }: Props) => {
           </div>
         </div>
 
-        <div className="truncate font-semibold md:text-xl">{data.name}</div>
+        <div className="truncate font-semibold md:text-base lg:text-xl">{data.name}</div>
 
         <div className="max-w-[60%] truncate text-xs md:text-sm text-gray-500">
           {data.description}
