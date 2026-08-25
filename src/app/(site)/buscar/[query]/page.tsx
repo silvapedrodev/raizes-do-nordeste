@@ -4,16 +4,16 @@ import { products } from "@/data/product";
 import { redirect } from "next/navigation";
 
 type Props = {
-  params: Promise<{ slug: string }>
+  params: Promise<{ query: string }>
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
 export default async function BuscaSlugPage({ params }: Props) {
   // TODO: fazer busca dos produtos
 
-  const { slug } = await params;
+  const { query } = await params;
 
-  const decodedQuery = decodeURIComponent(slug).toLowerCase();
+  const decodedQuery = decodeURIComponent(query).toLowerCase();
 
   const searchResults = products.filter(item => {
     const matchName = item.name.toLowerCase().includes(decodedQuery);
@@ -44,7 +44,7 @@ export default async function BuscaSlugPage({ params }: Props) {
       <div>
         <ProductCatalog
           data={products}
-          categorySlug={slug}
+          categorySlug={query}
           initialProducts={searchResults}
         />
       </div>
