@@ -1,5 +1,4 @@
 import { BagItem } from "@/types/bag-item";
-import { Unit } from "@/types/unit";
 import { cookies } from "next/headers";
 
 export const getServerBag = async (): Promise<BagItem[]> => {
