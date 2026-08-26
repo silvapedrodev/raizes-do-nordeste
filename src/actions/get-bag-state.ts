@@ -3,6 +3,6 @@
 import { getServerBag } from "@/lib/server-cookies"
 
 export const getBagState = async () => {
-  const bag = getServerBag();
+  const bag = await getServerBag();
   return { bag }
 }

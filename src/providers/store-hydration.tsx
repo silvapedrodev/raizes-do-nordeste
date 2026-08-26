@@ -16,7 +16,7 @@ export const StoreHydration = () => {
           getUnitState()
         ])
 
-        const bag = await bagData.bag;
+        const bag = bagData.bag;
         if (bag && bag.length > 0) {
           useBagStore.setState({ bag })
         }
