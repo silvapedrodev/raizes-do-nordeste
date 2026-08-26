@@ -2,7 +2,7 @@ import { ImageSlider } from "@/components/product/image-slider";
 import { ProductDetails } from "@/components/product/product-details";
 import { RelatedProductsSkeleton } from "@/components/product/related-product-skeleton";
 import { RelatedProducts } from "@/components/product/related-products";
-import { products } from "@/data/product";
+import { getProductsByUnit } from "@/lib/menu";
 import { formatSlug } from "@/utils/normalize-text";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
@@ -12,9 +12,11 @@ type Props = {
 }
 
 export default async function ProductPage({ params }: Props) {
+  // TODO: Fazer consulta do produto pelo slug
   const { slug } = await params
 
-  // TODO: Fazer consulta do produto pelo slug
+  const selectedUnitId = "unit-001";
+  const products = getProductsByUnit(selectedUnitId);
 
   const product = products.find((item) => formatSlug(item.slug) === formatSlug(slug))
 
