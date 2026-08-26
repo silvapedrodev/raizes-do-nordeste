@@ -1,13 +1,14 @@
-import { products } from "@/data/product";
 import { ProductList } from "@/components/product-list";
+import { getProductsForCurrentUnit } from "@/lib/get-current-unit";
 
 type Props = {
   id: string
 }
 
-export const RelatedProducts = ({ id }: Props) => {
+export const RelatedProducts = async ({ id }: Props) => {
   // TODO: Remover mock e buscar dados via API
 
+  const products = await getProductsForCurrentUnit();
   const currentProduct = products.find((item) => item.id === id);
   if (!currentProduct) return null;
 

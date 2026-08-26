@@ -1,6 +1,6 @@
 
 import { ProductCatalog } from "@/components/product-catalog";
-import { products } from "@/data/product";
+import { getProductsForCurrentUnit } from "@/lib/get-current-unit";
 import Link from "next/link";
 
 type Props = {
@@ -10,6 +10,8 @@ type Props = {
 
 export default async function Page({ params }: Props) {
   const { slug } = await params;
+
+  const products = await getProductsForCurrentUnit();
 
   const categoryTitle = slug
     .split("-")

@@ -6,15 +6,20 @@ export const getProductsByUnit = (unitId: string): Product[] => {
   const menu = menus.find((menu) => menu.unitId === unitId);
   if (!menu) return [];
 
-  return menu.items
-    .map((menuItem) => {
-      const product = products.find((p) => p.id === menuItem.productId);
-      if (!product) return null;
+  const mappedProducts: (Product | null)[] = menu.items.map((menuItem) => {
+    const product = products.find((p) => p.id === menuItem.productId);
+    if (!product) return null;
 
-      return {
-        ...product,
-        price: menuItem.price,
-      };
-    })
-    .filter((item): item is Product => item !== null);
+    const combinedCategories = Array.from(
+      new Set([...product.categories, ...(menuItem.categories ?? [])])
+    );
+
+    return {
+      ...product,
+      price: menuItem.price ?? product.price,
+      categories: combinedCategories,
+    };
+  });
+
+  return mappedProducts.filter((item): item is Product => item !== null);
 };

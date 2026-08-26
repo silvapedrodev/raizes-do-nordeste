@@ -9,7 +9,6 @@ export const menus: Menu[] = [
       {
         id: "menu-item-001",
         productId: "prod-001",
-        price: 18.90,
         available: true,
       },
 
@@ -48,6 +47,14 @@ export const menus: Menu[] = [
         productId: "prod-002",
         price: 25.90,
         available: true,
+      },
+
+      {
+        id: "menu-item-006",
+        productId: "prod-004",
+        price: 25.90,
+        available: true,
+        categories: ['pratos-do-dia']
       },
     ],
 

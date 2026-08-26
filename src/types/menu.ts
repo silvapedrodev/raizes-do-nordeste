@@ -1,7 +1,8 @@
 export type MenuItem = {
   id: string;
   productId: string;
-  price: number;
+  price?: number;
+  categories?: string[];
   available: boolean;
 };
 

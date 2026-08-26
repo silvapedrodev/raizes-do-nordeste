@@ -1,7 +1,7 @@
 import { ProductCatalog } from "@/components/product-catalog";
 import { HeaderSearch } from "@/components/layout/header-search";
-import { products } from "@/data/product";
 import { redirect } from "next/navigation";
+import { getProductsForCurrentUnit } from "@/lib/get-current-unit";
 
 type Props = {
   params: Promise<{ query: string }>
@@ -14,6 +14,8 @@ export default async function BuscaSlugPage({ params }: Props) {
   const { query } = await params;
 
   const decodedQuery = decodeURIComponent(query).toLowerCase();
+
+  const products = await getProductsForCurrentUnit();
 
   const searchResults = products.filter(item => {
     const matchName = item.name.toLowerCase().includes(decodedQuery);
