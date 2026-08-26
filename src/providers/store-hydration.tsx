@@ -2,6 +2,8 @@
 
 import { getBagState } from "@/actions/get-bag-state";
 import { getUnitState } from "@/actions/get-unit-state";
+import { units } from "@/data/units";
+import { getCurrentUnitId } from "@/lib/get-current-unit";
 import { useBagStore } from "@/store/bag";
 import { useUnitStore } from "@/store/unit";
 import { useEffect } from "react";
@@ -21,7 +23,15 @@ export const StoreHydration = () => {
           useBagStore.setState({ bag })
         }
 
-        if (unitData.unit) useUnitStore.setState({ selectedUnitId: unitData.unit })
+        const unitId = unitData.unit;
+        if (unitId) {
+          const foundUnit = units.find((u) => u.id === unitId);
+
+          if (foundUnit) {
+            useUnitStore.setState({ selectedUnitId: foundUnit.id });
+            useBagStore.setState({ unit: foundUnit });
+          }
+        }
 
       } catch (error) {
         console.error("Erro ao hidratar os stores:", error);

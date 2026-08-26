@@ -17,7 +17,7 @@ import { setBagState } from "@/actions/set-bag-state";
 export const StoreLocationSelect = () => {
   const { selectedUnitId, setUnit } = useUnitStore()
   const bag = useBagStore((state) => state.bag)
-  
+
   const router = useRouter()
 
   const currentUnit = units.find(unit => unit.id === selectedUnitId) || units[0]
@@ -25,11 +25,14 @@ export const StoreLocationSelect = () => {
   const handleChange = async (value: string | null) => {
     if (!value) return
 
+    const newUnitObject = units.find((u) => u.id === value);
+
     const validBag = validateBagForUnit(bag, value);
     useBagStore.setState({ bag: validBag });
     await setBagState(validBag);
 
     await setUnit(value);
+    if (newUnitObject) useBagStore.setState({ unit: newUnitObject });
     router.refresh();
   }
 
