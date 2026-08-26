@@ -1,4 +1,5 @@
 import { BagItem } from "@/types/bag-item";
+import { Unit } from "@/types/unit";
 import { cookies } from "next/headers";
 
 export const getServerBag = async (): Promise<BagItem[]> => {
@@ -23,3 +24,13 @@ export const clearServerBag = async () => {
   cookieStore.delete('bag');
 }
 
+export const getServerUnit = async (): Promise<string | null> => {
+  const cookieStore = await cookies();
+  const value = cookieStore.get('selected-unit')?.value;
+  return value || null;
+}
+
+export const setServerUnit = async (unit: string) => {
+  const cookieStore = await cookies();
+  cookieStore.set('selected-unit', unit, { httpOnly: false });
+}

@@ -1,3 +1,5 @@
+"use server"
+
 import { setServerBag } from "@/lib/server-cookies";
 import { BagItem } from "@/types/bag-item";
 

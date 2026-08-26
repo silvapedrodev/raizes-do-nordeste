@@ -39,7 +39,7 @@ export const menus: Menu[] = [
       {
         id: "menu-item-004",
         productId: "prod-001",
-        price: 21.90,
+        price: 40.90,
         available: true,
       },
 
