@@ -5,10 +5,12 @@ import Link from "next/link"
 import { StoreLocationSelect } from "./store-location-select"
 import { HeaderSearch } from "./header-search"
 import { PaperBag, UserRound } from "lucide-react"
+import { useBagStore } from "@/store/bag"
 
 export function Header() {
+  const bag = useBagStore(state => state.bag)
 
-  const value = 1
+  const value = bag.length
   const displayValue = value > 99 ? "99+" : value
 
   return (

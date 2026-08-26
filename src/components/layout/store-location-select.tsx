@@ -1,17 +1,33 @@
 import { Store } from "lucide-react";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
 import { useUnitStore } from "@/store/unit";
 import { units } from "@/data/units";
 import { useRouter } from "next/navigation";
+import { useBagStore } from "@/store/bag";
+import { validateBagForUnit } from "@/lib/bag-validation";
+import { setBagState } from "@/actions/set-bag-state";
 
 export const StoreLocationSelect = () => {
   const { selectedUnitId, setUnit } = useUnitStore()
+  const bag = useBagStore((state) => state.bag)
+  
   const router = useRouter()
 
   const currentUnit = units.find(unit => unit.id === selectedUnitId) || units[0]
 
   const handleChange = async (value: string | null) => {
     if (!value) return
+
+    const validBag = validateBagForUnit(bag, value);
+    useBagStore.setState({ bag: validBag });
+    await setBagState(validBag);
 
     await setUnit(value);
     router.refresh();

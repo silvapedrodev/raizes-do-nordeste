@@ -6,21 +6,20 @@ import { Plus, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { ProductItemLocked } from "@/components/product-item-locked";
+import { useBagActions } from "@/hooks/use-bag-actions";
 
 type Props = {
   data: Product;
 }
 
 export const ProductItem = ({ data }: Props) => {
+  const { addToBag } = useBagActions()
+
   if (data.status === "inactive") {
     return <ProductItemLocked data={data} />;
   }
 
   const link = `/produto/${data.slug}`
-
-  const handleClick = () => {
-    // TODO: add item to bag
-  }
 
   return (
     <div
@@ -67,7 +66,7 @@ export const ProductItem = ({ data }: Props) => {
 
           <button
             className="relative z-10 flex items-center gap-0.5 bg-primary-main p-2 text-white text-xs md:text-sm rounded-xl font-medium hover:bg-primary-main/80"
-            onClick={() => handleClick()}
+            onClick={() => addToBag(data.id)}
           >
             <Plus size={16} />
             Adicionar

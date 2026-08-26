@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 
 export const getServerBag = async (): Promise<BagItem[]> => {
   const cookieStore = await cookies();
-  const value = cookieStore.get('cart')?.value;
+  const value = cookieStore.get('bag')?.value;
   if (!value) return [];
 
   try {

@@ -5,6 +5,8 @@ import { Clock, Flame, PaperBag, Star, Utensils } from "lucide-react";
 import { ProductTags } from "@/components/product/product-tag";
 import { formatPrice } from "@/utils/format-price";
 import { AppButton } from "@/components/app-button";
+import { useBagStore } from "@/store/bag";
+import { useBagActions } from "@/hooks/use-bag-actions";
 
 type Props = {
   product: Product;
@@ -17,14 +19,15 @@ type StatItemProps = {
 }
 
 export const ProductDetails = ({ product }: Props) => {
+  const bagStore = useBagStore(state => state)
 
-  const addToBag = () => {
-    console.log("add")
-  }
+  const { addToBag } = useBagActions();
 
   return (
     <div className="flex flex-col space-y-1.5 md:space-x-2">
       <span className="w-fit px-3 py-1 bg-primary-main text-white text-sm font-medium capitalize rounded-full">{product.categories[0]}</span>
+
+      <p>Carrinho: {bagStore.bag.length}</p>
 
       <h2 className="font-bold text-2xl md:text-3xl">{product.name}</h2>
       <p className="text-sm text-gray-500">{product.description}</p>
@@ -80,7 +83,10 @@ export const ProductDetails = ({ product }: Props) => {
         <span className="font-bold text-primary-main text-4xl">R$ {formatPrice(product.price)}</span>
         <div className="flex mt-6 gap-2">
           <div className="flex-1">
-            <AppButton icon={PaperBag} onClick={addToBag}>Adicionar a sacola</AppButton>
+            <AppButton
+              icon={PaperBag}
+              onClick={() => addToBag(product.id)}
+            >Adicionar a sacola</AppButton>
           </div>
           <div className="flex justify-between items-center border border-gray-200 rounded-full w-32 px-1 py-1 m">
             <span className="flex items-center justify-center bg-gray-200 hover:bg-white w-8 h-8 rounded-full font-bold text-gray-700 cursor-pointer select-none">
