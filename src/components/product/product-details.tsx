@@ -18,7 +18,7 @@ type StatItemProps = {
 
 export const ProductDetails = ({ product }: Props) => {
 
-  const handleAddProduct = () => {
+  const addToBag = () => {
     console.log("add")
   }
 
@@ -80,7 +80,7 @@ export const ProductDetails = ({ product }: Props) => {
         <span className="font-bold text-primary-main text-4xl">R$ {formatPrice(product.price)}</span>
         <div className="flex mt-6 gap-2">
           <div className="flex-1">
-            <AppButton icon={PaperBag} onClick={handleAddProduct}>Adicionar a sacola</AppButton>
+            <AppButton icon={PaperBag} onClick={addToBag}>Adicionar a sacola</AppButton>
           </div>
           <div className="flex justify-between items-center border border-gray-200 rounded-full w-32 px-1 py-1 m">
             <span className="flex items-center justify-center bg-gray-200 hover:bg-white w-8 h-8 rounded-full font-bold text-gray-700 cursor-pointer select-none">
