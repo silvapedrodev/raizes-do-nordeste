@@ -25,6 +25,8 @@ export const StoreHydration = () => {
 
       } catch (error) {
         console.error("Erro ao hidratar os stores:", error);
+
+        useBagStore.setState({ bag: [] });
       }
     };
 

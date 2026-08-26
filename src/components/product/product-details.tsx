@@ -27,8 +27,6 @@ export const ProductDetails = ({ product }: Props) => {
     <div className="flex flex-col space-y-1.5 md:space-x-2">
       <span className="w-fit px-3 py-1 bg-primary-main text-white text-sm font-medium capitalize rounded-full">{product.categories[0]}</span>
 
-      <p>Carrinho: {bagStore.bag.length}</p>
-
       <h2 className="font-bold text-2xl md:text-3xl">{product.name}</h2>
       <p className="text-sm text-gray-500">{product.description}</p>
 
