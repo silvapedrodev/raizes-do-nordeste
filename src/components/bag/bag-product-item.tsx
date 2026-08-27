@@ -46,7 +46,7 @@ export const BagProductItem = ({ item }: Props) => {
           </p>
         </div>
 
-        <div className="shrink-0 md:self-center">
+        <div className="shrink-0 mt-2 md:mt-0 md:self-center">
           <QuantitySelector
             productId={item.product.id}
             quantity={item.quantity}
