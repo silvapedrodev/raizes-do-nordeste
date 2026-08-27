@@ -14,7 +14,7 @@ type Props = {
 }
 
 export const BagContainer = ({ initialBagProducts, initialSubtotal }: Props) => {
-  const { bag, couponDiscount, couponCode, setCoupon } = useBagStore(state => state)
+  const { bag, couponDiscount, couponCode } = useBagStore(state => state)
 
   const total = Math.max(0, initialSubtotal - (couponDiscount ?? 0));
 
