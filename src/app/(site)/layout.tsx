@@ -2,13 +2,11 @@ import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { Toaster } from "@/components/ui/toast";
-import { StoreHydration } from "@/providers/store-hydration";
 
 export default function SiteLayout({ children }: LayoutProps<"/">) {
   return (
     <div className="min-h-screen flex flex-col">
       <Toaster timeout={2000}/>
-      <StoreHydration />
       <Header />
       <main className="w-full max-w-7xl mx-auto px-6 mt-6 md:mt-10 flex-1 flex flex-col">
         {children}
