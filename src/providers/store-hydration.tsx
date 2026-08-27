@@ -22,6 +22,18 @@ export const StoreHydration = () => {
           useBagStore.setState({ bag })
         }
 
+        if (bagData.fulfillment) {
+          useBagStore.setState({ fulfillment: bagData.fulfillment })
+        }
+
+        if (bagData.couponDiscount !== null && bagData.couponDiscount !== undefined) {
+          useBagStore.setState({ couponDiscount: bagData.couponDiscount })
+        }
+
+        if (bagData.couponCode) {
+          useBagStore.setState({ couponCode: bagData.couponCode })
+        }
+
         const unitId = unitData.unit || units[0].id;
         if (unitId) {
           const foundUnit = units.find((u) => u.id === unitId);

@@ -2,6 +2,7 @@ import { useBagStore } from "@/store/bag"
 import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group"
 import { FulfillmentType } from "@/types/unit"
 import { Circle, CircleCheck, ForkKnife, PaperBag } from "lucide-react"
+import { setBagState } from "@/actions/set-bag-state"
 
 export const ToggleFulfillment = () => {
   const { fulfillment, setFulfillment } = useBagStore()
@@ -12,6 +13,13 @@ export const ToggleFulfillment = () => {
     const newValue = values[0] as FulfillmentType;
     if (newValue) {
       setFulfillment(newValue);
+
+      const store = useBagStore.getState();
+      await setBagState({
+        bag: store.bag,
+        fulfillment: newValue,
+        couponDiscount: store.couponDiscount,
+      })
     }
   };
 

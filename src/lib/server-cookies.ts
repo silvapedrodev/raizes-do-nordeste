@@ -1,21 +1,31 @@
-import { BagItem } from "@/types/bag-item";
+import { BagStateData } from "@/types/bag-item";
 import { cookies } from "next/headers";
 
-export const getServerBag = async (): Promise<BagItem[]> => {
+export const getServerBag = async (): Promise<BagStateData> => {
   const cookieStore = await cookies();
   const value = cookieStore.get('bag')?.value;
-  if (!value) return [];
+
+  const defaultState: BagStateData = {
+    bag: [],
+    fulfillment: "pickup",
+    couponDiscount: null,
+    couponCode: null,
+  };
+
+  if (!value) return defaultState;
 
   try {
-    return JSON.parse(value);
+    const parsed = JSON.parse(value);
+    if (Array.isArray(parsed)) return { ...defaultState, bag: parsed };
+    return { ...defaultState, ...parsed };
   } catch {
-    return [];
+    return defaultState;
   }
 }
 
-export const setServerBag = async (bag: BagItem[]) => {
+export const setServerBag = async (state: BagStateData) => {
   const cookieStore = await cookies();
-  cookieStore.set('bag', JSON.stringify(bag), { httpOnly: true });
+  cookieStore.set('bag', JSON.stringify(state), { httpOnly: true });
 }
 
 export const clearServerBag = async () => {
