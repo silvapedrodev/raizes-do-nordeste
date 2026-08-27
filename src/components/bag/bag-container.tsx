@@ -81,7 +81,9 @@ export const BagContainer = ({ initialBagProducts, initialSubtotal }: Props) => 
             </div>
           </div>
 
-          <FinishPurchaseButton />
+          <div className="mt-9">
+            <FinishPurchaseButton />
+          </div>
 
           <div className="text-center mt-5">
             <Link
