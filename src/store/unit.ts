@@ -1,4 +1,5 @@
 import { setUnitState } from "@/actions/set-unit-state";
+import { units } from "@/data/units";
 import { create } from "zustand";
 
 type UnitState = {
@@ -8,7 +9,7 @@ type UnitState = {
 }
 
 export const useUnitStore = create<UnitState>((set) => ({
-  selectedUnitId: 'unit-001',
+  selectedUnitId: units[0].id,
 
   initUnit: (unitId: string) => set({ selectedUnitId: unitId }),
 

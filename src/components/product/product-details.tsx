@@ -7,6 +7,7 @@ import { formatPrice } from "@/utils/format-price";
 import { AppButton } from "@/components/app-button";
 import { useBagStore } from "@/store/bag";
 import { useBagActions } from "@/hooks/use-bag-actions";
+import { QuantitySelector } from "@/components/quantity-selector";
 
 type Props = {
   product: Product;
@@ -20,8 +21,10 @@ type StatItemProps = {
 
 export const ProductDetails = ({ product }: Props) => {
   const bagStore = useBagStore(state => state)
-
   const { addToBag } = useBagActions();
+
+  const existingItem = bagStore.bag.find(item => item.productId === product.id);
+  const currentQuantity = existingItem ? existingItem.quantity : 0;
 
   return (
     <div className="flex flex-col space-y-1.5 md:space-x-2">
@@ -86,18 +89,12 @@ export const ProductDetails = ({ product }: Props) => {
               onClick={() => addToBag(product.id)}
             >Adicionar a sacola</AppButton>
           </div>
-          <div className="flex justify-between items-center border border-gray-200 rounded-full w-32 px-1 py-1 m">
-            <span className="flex items-center justify-center bg-gray-200 hover:bg-white w-8 h-8 rounded-full font-bold text-gray-700 cursor-pointer select-none">
-              -
-            </span>
-
-            <span className="font-semibold text-gray-800">
-              1
-            </span>
-
-            <span className="flex items-center justify-center bg-gray-200 hover:bg-white w-8 h-8 rounded-full font-bold text-gray-700 cursor-pointer select-none">
-              +
-            </span>
+          <div>
+            <QuantitySelector
+              productId={product.id}
+              quantity={currentQuantity}
+              className="w-28 md:w-32 h-full"
+            />
           </div>
         </div>
       </div>

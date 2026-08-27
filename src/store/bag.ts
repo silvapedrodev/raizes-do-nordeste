@@ -23,7 +23,7 @@ export const useBagStore = create<BagState>((set) => ({
   bag: [],
   couponDiscount: null,
   unit: null,
-  fulfillment: null,
+  fulfillment: "pickup",
 
   addItem: ({ productId, quantity }) => set(state => {
     const existingProduct = state.bag.find(item => item.productId === productId);
