@@ -6,7 +6,8 @@ import { BagProductList } from "@/components/bag/bag-product-list";
 import { BagUnitInfo } from "@/components/bag/bag-unit-info";
 import { ChevronRight, Ticket } from "lucide-react";
 import { formatPrice } from "@/utils/format-price";
-import { FinishPurchase } from "@/components/bag/finish-purchase";
+import { FinishPurchaseButton } from "@/components/bag/finish-purchase-button";
+import Link from "next/link";
 
 type Props = {
   initialBagProducts: BagListItem[];
@@ -33,16 +34,16 @@ export const BagContainer = ({ initialBagProducts, initialSubtotal }: Props) => 
           <BagProductList initialList={initialBagProducts} />
         </div>
       </div>
-      <div className="flex-1">
-        <div className="border border-gray-200 py-6 px-4 md:py-8 md:px-6 rounded-3xl shadow-[1px_1px_8px_rgba(0,0,0,0.10)]">
+      <div className="">
+        <div className="border lg:max-w-120 border-gray-200 py-6 px-4 md:py-8 md:px-6 rounded-3xl shadow-[1px_1px_8px_rgba(0,0,0,0.10)]">
           <button className="flex w-full items-center justify-between gap-2 border border-gray-200 rounded-lg p-4 hover:bg-gray-100 text-start cursor-pointer">
             <div className="flex gap-2 items-center">
               <div>
-                <Ticket size={32} className="stroke-primary-main md:size-10" />
+                <Ticket size={32} className="stroke-primary-main" />
               </div>
               <div className="leading-4">
-                <p className="font-medium text-[12px] md:text-base">Adicionar cupom de desconto</p>
-                <p className="text-gray-500 text-[12px] md:text-sm">Digite um código ou consulte vantagens</p>
+                <p className="font-medium text-[12px] md:text-sm">Adicionar cupom de desconto</p>
+                <p className="text-gray-500 text-[12px]">Digite um código ou consulte vantagens</p>
               </div>
             </div>
             <div>
@@ -80,7 +81,14 @@ export const BagContainer = ({ initialBagProducts, initialSubtotal }: Props) => 
             </div>
           </div>
 
-          <FinishPurchase />
+          <FinishPurchaseButton />
+
+          <div className="text-center mt-5">
+            <Link
+              href={'/'}
+              className="text-sm text-gray-400"
+            >Comprar mais produtos</Link>
+          </div>
         </div>
       </div>
     </div>
