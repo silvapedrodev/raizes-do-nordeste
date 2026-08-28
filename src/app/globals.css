@@ -136,4 +136,18 @@ body {
   html {
     @apply font-sans;
   }
+
+  @layer components {
+  .markdown-body {
+    counter-reset: h1-counter;
+  }
+  
+  .markdown-body h1 {
+    counter-increment: h1-counter;
+  }
+
+  .markdown-body h1::before {
+    content: counter(h1-counter) ". ";
+  }
+}
 }
