@@ -7,19 +7,22 @@ type Props = {
   children: React.ReactNode
   icon?: LucideIcon
   variant?: "default" | "outline"
+  type?: "button" | "reset" | "submit";
   onClick?: () => void
   className?: string
 }
 
-export const AppButton = ({ children, icon: Icon, variant, onClick, className }: Props) => {
+export const AppButton = ({ children, icon: Icon, variant, type, onClick, className }: Props) => {
   return (
     <Button
+      type={type}
       variant={variant}
       onClick={onClick}
-      className={`w-full h-12 rounded-xl py-3 font-semibold text-base gap-2 ${className}
+      className={`w-full h-12 rounded-xl py-3 font-semibold text-base gap-2 
         ${variant === 'outline'
           ? 'text-primary-main border-gray-200 hover:bg-gray-100'
           : 'bg-primary-main text-white hover:bg-primary-main/80 '}
+          ${className}
       `}
     >
       {Icon && <Icon size={24} className="size-6" />}
