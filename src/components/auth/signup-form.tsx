@@ -4,10 +4,40 @@ import { AppInput } from "@/components/app-input";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { AppButton } from "@/components/app-button";
+import { useEffect, useState } from "react";
+import { ChevronLeft } from "lucide-react";
 
-export const SignupForm = () => {
+type Props = {
+  identifier: string
+  onBack: () => void
+}
+
+export const SignupForm = ({ identifier, onBack }: Props) => {
+  const [email, setEmail] = useState("")
+  const [cpf, setCpf] = useState("")
+
+  const isEmail = identifier.includes("@")
+
+  useEffect(() => {
+    if (isEmail) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setEmail(identifier);
+      return
+    }
+    setCpf(identifier)
+
+  }, [identifier, isEmail]);
+
   return (
     <form className="w-full my-4 max-w-sm lg:max-w-md">
+      <button
+        type="button"
+        onClick={onBack}
+        className="flex items-center gap-2 text-sm text-primary-main hover:text-gray-800 mb-6 transition-colors"
+      >
+        <ChevronLeft size={24} className="lg:size-8"/>
+      </button>
+
       <div>
         <h1 className="font-semibold text-3xl lg:text-4xl text-center lg:text-start">
           Criar sua conta
@@ -34,6 +64,8 @@ export const SignupForm = () => {
             maxLength={11}
             type="text"
             placeholder="Digite seu CPF"
+            value={cpf}
+            onChange={(e) => setCpf(e.target.value)}
           />
         </Field>
 
@@ -43,6 +75,8 @@ export const SignupForm = () => {
             id="input-field-email"
             type="email"
             placeholder="Digite seu e-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </Field>
 

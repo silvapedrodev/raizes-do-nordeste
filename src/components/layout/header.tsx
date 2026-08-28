@@ -3,17 +3,26 @@
 import Image from "next/image"
 import Link from "next/link"
 import { StoreLocationSelect } from "./store-location-select"
-import { HeaderSearch } from "./header-search"
+import { HeaderSearch } from "@/components/layout/header-search"
 import { PaperBag, UserRound } from "lucide-react"
 import { useBagStore } from "@/store/bag"
+import { useAuthStore } from "@/store/auth"
+import { getUserFirstName } from "@/lib/auth-mock"
 
 export function Header() {
   const bag = useBagStore(state => state.bag)
+  const { token, hydrated } = useAuthStore(state => state);
+  const isAuthenticated = hydrated && !!token;
+
+  const firstName = isAuthenticated
+    ? getUserFirstName(token)
+    : null;
 
   const value = bag.length
   const displayValue = value > 99 ? "99+" : value
 
   return (
+
     <header className="border-b border-gray-200">
       <div className="mx-auto w-full max-w-7xl px-6 py-4 md:px0 md:py-3">
 
@@ -40,7 +49,7 @@ export function Header() {
           <div className="ml-auto hidden gap-6 md:flex">
             <Link href="/perfil" className="flex items-center gap-1.5">
               <UserRound className="text-primary-main" />
-              <span className="text-sm">Minha conta</span>
+              <span className="text-sm">{isAuthenticated ? `Olá, ${firstName}` : 'Minha conta'}</span>
             </Link>
 
             <Link href="/sacola" className="flex items-center gap-1.5">

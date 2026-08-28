@@ -1,12 +1,65 @@
+import { setAuthCookie } from "@/actions/set-auth-cookie";
 import { AppButton } from "@/components/app-button";
 import { PasswordInput } from "@/components/password-input";
 import { Field, FieldLabel } from "@/components/ui/field";
+import { findUserByIdentifier, signin } from "@/lib/auth-mock";
+import { useAuthStore } from "@/store/auth";
+import { ChevronLeft } from "lucide-react";
+import { redirect } from "next/navigation";
+import { useState } from "react";
 
-export const SigninForm = () => {
+type Props = {
+  identifier: string
+  onBack: () => void
+}
+
+export const SigninForm = ({ identifier, onBack }: Props) => {
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const setToken = useAuthStore(state => state.setToken);
+  const user = findUserByIdentifier(identifier);
+  const firstName = user?.name.trim().split(/\s+/)[0];
+
+  const handleSubmit = async (e: React.SubmitEvent) => {
+    e.preventDefault();
+
+    setError("");
+    if (!password) {
+      setError("Digite sua senha");
+      return;
+    }
+
+    setLoading(true);
+    const result = signin(identifier, password);
+
+    if (!result.token) {
+      setError(result.error ?? "Não foi possível entrar");
+      setLoading(false);
+      return;
+    }
+
+    await setAuthCookie(result.token);
+    setToken(result.token);
+
+    setLoading(false);
+    redirect("/")
+    // Login concluído
+  };
+
   return (
-    <form className="w-full max-w-sm lg:max-w-md">
+    <form className="w-full max-w-sm lg:max-w-md" onSubmit={handleSubmit}>
+      <button
+        type="button"
+        onClick={onBack}
+        className="flex items-center gap-2 text-sm text-primary-main hover:text-gray-800 mb-6 transition-colors"
+      >
+        <ChevronLeft size={24} className="lg:size-8" />
+      </button>
+
       <div>
-        <h1 className="font-semibold text-3xl lg:text-4xl">Olá, Name</h1>
+        <h1 className="font-semibold text-3xl lg:text-4xl">Olá, {firstName}</h1>
         <p className="text-sm lg:text-base text-gray-500 mt-2">Digite sua senha para continuar</p>
       </div>
 
@@ -14,11 +67,19 @@ export const SigninForm = () => {
         <Field>
           <FieldLabel>Senha</FieldLabel>
           <PasswordInput
+            value={password}
+            onChange={e => setPassword(e.target.value)}
             placeholder="Digite sua senha"
           />
         </Field>
 
-        <AppButton className="mt-4">Entrar</AppButton>
+        {error && (
+          <p className="text-sm text-red-500 mt-1">
+            {error}
+          </p>
+        )}
+
+        <AppButton type="submit" className="mt-4">{loading ? "Entrando..." : "Entrar"}</AppButton>
       </div>
 
       <div className="text-center mt-8">
