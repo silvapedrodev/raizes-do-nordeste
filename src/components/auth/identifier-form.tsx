@@ -31,7 +31,9 @@ export const IdentifierForm = ({ onNext }: Props) => {
     const newValue =
       name === "cpf"
         ? formatCPF(inputValue)
-        : inputValue;
+        : name === "email"
+          ? inputValue.trim().toLowerCase()
+          : inputValue;;
 
     setValue(prev => ({
       ...prev,
@@ -50,7 +52,7 @@ export const IdentifierForm = ({ onNext }: Props) => {
     const inputValue =
       authType === "cpf"
         ? unformatCPF(value.cpf)
-        : value.email;
+        : value.email.trim().toLowerCase();
 
     const result = createAuthSchema(authType).safeParse({
       value: inputValue,

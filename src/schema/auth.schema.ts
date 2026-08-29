@@ -32,19 +32,53 @@ const isValidCPF = (cpf: string): boolean => {
   return digit2 === Number(cleanedCPF[10]);
 };
 
+const validateAge = (dateString: string, minAge: number = 13) => {
+  const birthDate = new Date(dateString);
+  if (isNaN(birthDate.getTime())) return false;
+
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const month = today.getMonth() - birthDate.getMonth();
+
+  if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+
+  return age >= minAge;
+};
+
 export const createAuthSchema = (type: "email" | "cpf") => {
   return z.object({
     value:
       type === "email"
         ? z
-          .string()
-          .min(1, "E-mail obrigatório")
           .email("Digite um e-mail válido")
+          .min(1, "E-mail obrigatório")
         : z
           .string()
           .min(1, "CPF obrigatório")
           .refine(isValidCPF, "Digite um CPF válido"),
   });
 };
+
+export const createSignupSchema = () => {
+  return z.object({
+    name: z.string().min(2, 'O nome deve ter pelo menos 2 caracteres'),
+    cpf: z.string().min(1, 'CPF obrigatório').refine(isValidCPF, 'Digite um CPF válido'),
+    email: z.email("Digite um e-mail válido"),
+    phone: z.string().min(11, 'Número de telefone inválido'),
+    birthDate: z.string().refine((val) => validateAge(val, 13), {
+      message: 'Você deve ter pelo menos 13 anos.',
+    }),
+    password: z.string().min(8, 'A senha deve ter pelo menos 8 caracteres'),
+    confirmPassword: z.string(),
+    terms: z.literal(true, {
+      error: 'Você precisa aceitar os termos para continuar'
+    })
+  }).refine(data => data.password === data.confirmPassword, {
+    error: 'As senhas não coincidem. Por favor, verifique.',
+    path: ['confirmPassword']
+  })
+}
 
 export type AuthFormData = z.infer<ReturnType<typeof createAuthSchema>>;

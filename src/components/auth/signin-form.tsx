@@ -70,14 +70,9 @@ export const SigninForm = ({ identifier, onBack }: Props) => {
             value={password}
             onChange={e => setPassword(e.target.value)}
             placeholder="Digite sua senha"
+            error={error}
           />
         </Field>
-
-        {error && (
-          <p className="text-sm text-red-500 mt-1">
-            {error}
-          </p>
-        )}
 
         <AppButton
           type="submit"

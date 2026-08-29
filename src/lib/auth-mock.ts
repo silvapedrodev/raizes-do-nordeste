@@ -1,17 +1,21 @@
-export type MockUser = {
-  id: string;
+import { User } from "@/types/user";
+
+type CreateUserData = {
   name: string;
-  email: string;
   cpf: string;
-  password: string;
+  email: string;
   phone: string;
   birthDate: string;
-};
+  password: string;
+  confirmPassword: string;
+  terms: boolean;
+}
+
 
 const USERS_KEY = "mock_users";
 const TOKEN_KEY = "mock_token";
 
-const getUsers = (): MockUser[] => {
+const getUsers = (): User[] => {
   if (typeof window === "undefined") {
     return [];
   }
@@ -25,9 +29,7 @@ const getUsers = (): MockUser[] => {
   return JSON.parse(users);
 };
 
-export const findUserByIdentifier = (
-  identifier: string
-): MockUser | null => {
+export const findUserByIdentifier = (identifier: string): User | null => {
   const users = getUsers();
 
   if (identifier.includes("@")) {
@@ -49,10 +51,7 @@ export const findUserByIdentifier = (
   );
 };
 
-export const signin = (
-  identifier: string,
-  password: string
-) => {
+export const signin = (identifier: string, password: string) => {
   const user = findUserByIdentifier(identifier);
 
   if (!user) {
@@ -77,29 +76,55 @@ export const signin = (
   };
 };
 
-export const createMockUser = (
-  data: Omit<MockUser, "id">
-): MockUser => {
+
+export const createMockUser = (data: CreateUserData): User => {
+  const users = getUsers();
+  const now = new Date().toISOString();
+
+  const newUser = {
+    id: crypto.randomUUID(),
+
+    name: data.name,
+    cpf: data.cpf,
+    email: data.email,
+    phone: data.phone,
+    birthDate: data.birthDate,
+    password: data.password,
+
+    orders: [],
+    loyalty: null,
+
+    privacy: {
+      analyticsCookies: true,
+      personalizedOffers: false,
+    },
+
+    legalConsent: {
+      termsOfUse: data.terms,
+      privacyPolicy: data.terms,
+      acceptedAt: now,
+    },
+
+    createdAt: now,
+    updatedAt: now,
+  }
+
+  localStorage.setItem(USERS_KEY, JSON.stringify([...users, newUser]))
+
+  return newUser;
+}
+
+export const userExistsByEmailOrCpf = (email: string, cpf: string): boolean => {
   const users = getUsers();
 
-  const user: MockUser = {
-    id: crypto.randomUUID(),
-    ...data,
-  };
-
-  users.push(user);
-
-  localStorage.setItem(
-    USERS_KEY,
-    JSON.stringify(users)
+  return users.some(
+    user =>
+      user.email === email ||
+      user.cpf === cpf
   );
-
-  return user;
 };
 
-export const getUserFirstName = (
-  token: string
-): string | null => {
+export const getUserFirstName = (token: string): string | null => {
   const userId = token.split("_")[2];
 
   if (!userId) {
