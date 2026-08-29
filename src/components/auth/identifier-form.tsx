@@ -124,14 +124,9 @@ export const IdentifierForm = ({ onNext }: Props) => {
                 placeholder="Digite seu e-mail"
                 value={value.email}
                 onChange={handleChange}
+                error={errors.email}
               />
             </Field>
-
-            {errors[authType] && (
-              <div className="text-red-500 text-sm mt-1">
-                {errors[authType]}
-              </div>
-            )}
 
             <AppButton type="submit" className="mt-4">Continuar</AppButton>
           </div>
@@ -149,14 +144,9 @@ export const IdentifierForm = ({ onNext }: Props) => {
                 placeholder="Digite seu CPF"
                 value={value.cpf}
                 onChange={handleChange}
+                error={errors.cpf}
               />
             </Field>
-
-            {errors[authType] && (
-              <div className="text-red-500 text-sm mt-1">
-                {errors[authType]}
-              </div>
-            )}
 
             <AppButton type="submit" className="mt-4">Continuar</AppButton>
           </div>

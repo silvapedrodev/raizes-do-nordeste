@@ -79,7 +79,13 @@ export const SigninForm = ({ identifier, onBack }: Props) => {
           </p>
         )}
 
-        <AppButton type="submit" className="mt-4">{loading ? "Entrando..." : "Entrar"}</AppButton>
+        <AppButton
+          type="submit"
+          className="mt-4"
+          disabled={loading}
+        >
+          {loading ? "Entrando..." : "Entrar"}
+        </AppButton>
       </div>
 
       <div className="text-center mt-8">
