@@ -23,9 +23,6 @@ export const AppButton = ({ children, icon: Icon, variant = "default", className
     <Button
       {...props}
       variant={variant}
-      // type={type}
-      // variant={variant}
-      // onClick={onClick}
       className={`w-full h-12 rounded-xl py-3 font-semibold text-base gap-2 
         ${variant === 'outline'
           ? 'text-primary-main border-gray-200 hover:bg-gray-100'
