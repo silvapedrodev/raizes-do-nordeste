@@ -3,6 +3,12 @@
 import { LucideIcon } from "lucide-react"
 import { Button } from "./ui/button"
 
+interface AppButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  icon?: LucideIcon;
+  variant?: "default" | "outline"
+}
+
 type Props = {
   children: React.ReactNode
   icon?: LucideIcon
@@ -12,12 +18,14 @@ type Props = {
   className?: string
 }
 
-export const AppButton = ({ children, icon: Icon, variant, type, onClick, className }: Props) => {
+export const AppButton = ({ children, icon: Icon, variant = "default", className, ...props }: AppButtonProps) => {
   return (
     <Button
-      type={type}
+      {...props}
       variant={variant}
-      onClick={onClick}
+      // type={type}
+      // variant={variant}
+      // onClick={onClick}
       className={`w-full h-12 rounded-xl py-3 font-semibold text-base gap-2 
         ${variant === 'outline'
           ? 'text-primary-main border-gray-200 hover:bg-gray-100'
