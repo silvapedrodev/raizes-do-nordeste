@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useTransition } from "react";
 import { AppButton } from "@/components/app-button";
 import { AppInput } from "@/components/app-input";
 import { Field, FieldLabel } from "@/components/ui/field";
@@ -23,6 +23,7 @@ export const IdentifierForm = ({ onNext }: Props) => {
   const [value, setValue] = useState({ email: '', cpf: '' })
 
   const [errors, setErrors] = useState<ErrorStructure>({});
+  const [isPending, startTransition] = useTransition();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value: inputValue } = e.target;
@@ -65,8 +66,10 @@ export const IdentifierForm = ({ onNext }: Props) => {
 
     setErrors({});
 
-    const user = findUserByIdentifier(result.data.value);
-    onNext(result.data.value, !!user);
+    startTransition(() => {
+      const user = findUserByIdentifier(result.data.value);
+      onNext(result.data.value, !!user);
+    });
   }
 
   const handleAuthTypeChange = (type: AuthType) => {
@@ -128,7 +131,11 @@ export const IdentifierForm = ({ onNext }: Props) => {
               />
             </Field>
 
-            <AppButton type="submit" className="mt-4">Continuar</AppButton>
+            <AppButton
+              type="submit"
+              className="mt-4"
+              disabled={isPending}
+            >{isPending ? "Verificando..." : "Continuar"}</AppButton>
           </div>
         }
 
@@ -148,7 +155,11 @@ export const IdentifierForm = ({ onNext }: Props) => {
               />
             </Field>
 
-            <AppButton type="submit" className="mt-4">Continuar</AppButton>
+            <AppButton
+              type="submit"
+              className="mt-4"
+              disabled={isPending}
+            >{isPending ? "Verificando..." : "Continuar"}</AppButton>
           </div>
         }
       </form>
