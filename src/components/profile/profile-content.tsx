@@ -4,6 +4,7 @@ import { getUserByToken } from "@/lib/auth-mock";
 import { MobileView } from "@/components/profile/mobile-view";
 import { useAuthStore } from "@/store/auth";
 import { ProfileSkeleton } from "@/components/profile/profile-skeleton";
+import { DesktopProfileView } from "./desktop-profile-view";
 
 export const ProfileContent = () => {
   // A busca é de uso exclusivo para dados mock
@@ -17,6 +18,8 @@ export const ProfileContent = () => {
   return (
     <div>
       <MobileView user={currentUser} />
+
+      <DesktopProfileView user={currentUser} />
     </div>
   );
 }
