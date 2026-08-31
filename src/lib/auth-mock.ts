@@ -29,6 +29,16 @@ const getUsers = (): User[] => {
   return JSON.parse(users);
 };
 
+export const getUserByToken = (token: string | null): User | null => {
+  if (!token) return null;
+
+  const userId = token.split("_")[2];
+  if (!userId) return null;
+
+  const users = getUsers();
+  return users.find(user => user.id === userId) ?? null;
+};
+
 export const findUserByIdentifier = (identifier: string): User | null => {
   const users = getUsers();
 

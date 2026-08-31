@@ -1,5 +1,5 @@
 export default async function OrderPage() {
   return (
-    <div>....</div>
+    <div>orders</div>
   )
 }
