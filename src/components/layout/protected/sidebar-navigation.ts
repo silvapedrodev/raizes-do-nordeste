@@ -1,13 +1,13 @@
 import {
-  User,
-  CreditCard, Trash2,
+  User, Trash2,
   Settings,
   ReceiptText,
   Info,
   Headset,
   FileText,
   ShieldCheck,
-  SlidersHorizontal
+  SlidersHorizontal,
+  Gift
 } from "lucide-react";
 
 export const profileNavigation = [
@@ -25,9 +25,9 @@ export const profileNavigation = [
         icon: ReceiptText,
       },
       {
-        label: "Pagamentos",
+        label: "Programa de Fidelidade",
         href: '#',
-        icon: CreditCard,
+        icon: Gift,
       },
       {
         label: "Preferências",

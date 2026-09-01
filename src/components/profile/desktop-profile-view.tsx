@@ -34,7 +34,7 @@ export const DesktopProfileView = ({ user }: Props) => {
           </div>
 
           <div className="flex-1 min-w-0 space-y-1">
-            <h3 className="font-semibold text-lg truncate">{user.name}</h3>
+            <h3 className="font-semibold text-lg max-w-96 truncate">{user.name}</h3>
             <p className="text-sm text-gray-500 truncate">{user.email}</p>
             <p className="text-sm text-gray-500">{phoneMask(user.phone)}</p>
           </div>
