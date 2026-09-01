@@ -15,7 +15,7 @@ export const DesktopProfileView = ({ user }: Props) => {
     <div className="hidden lg:block">
       <div>
         <h1 className="text-3xl font-semibold">Meu Perfil</h1>
-        <p className="text-sm text-gray-500 mt-1">Gerencie suas informações pessoais e prefêrencias.</p>
+        <p className="text-sm text-gray-500 mt-1">Gerencie suas informações pessoais e preferências.</p>
       </div>
 
       <div className="border border-gray-200 p-7 rounded-xl mt-9 shadow-[1px_1px_8px_rgba(0,0,0,0.10)]">
