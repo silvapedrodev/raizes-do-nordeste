@@ -154,6 +154,122 @@ export const getUserFirstName = (token: string): string | null => {
   return user.name.trim().split(/\s+/)[0];
 };
 
+export const updateUserPrivacy = (
+  token: string,
+  privacy: Partial<User["privacy"]>
+): User | null => {
+  const userId = token.split("_")[2];
+
+  if (!userId) {
+    return null;
+  }
+
+  const users = getUsers();
+
+  const userIndex = users.findIndex(
+    user => user.id === userId
+  );
+
+  if (userIndex === -1) {
+    return null;
+  }
+
+  const updatedUser: User = {
+    ...users[userIndex],
+    privacy: {
+      ...users[userIndex].privacy,
+      ...privacy,
+    },
+    updatedAt: new Date().toISOString(),
+  };
+
+  users[userIndex] = updatedUser;
+
+  localStorage.setItem(
+    USERS_KEY,
+    JSON.stringify(users)
+  );
+
+  return updatedUser;
+};
+
+export const getUserLoyaltyConsent = (
+  token: string
+): {
+  participating: boolean;
+  personalizedOffers: boolean;
+} | null => {
+  const user = getUserByToken(token);
+
+  if (!user) {
+    return null;
+  }
+
+  return {
+    participating: user.loyalty !== null,
+    personalizedOffers: user.privacy.personalizedOffers,
+  };
+};
+
+export const updateUserLoyaltyConsent = (
+  token: string,
+  consent: {
+    participating?: boolean;
+    personalizedOffers?: boolean;
+  }
+): User | null => {
+  const userId = token.split("_")[2];
+
+  if (!userId) {
+    return null;
+  }
+
+  const users = getUsers();
+
+  const userIndex = users.findIndex(
+    user => user.id === userId
+  );
+
+  if (userIndex === -1) {
+    return null;
+  }
+
+  const currentUser = users[userIndex];
+
+  const updatedUser: User = {
+    ...currentUser,
+
+    loyalty:
+      consent.participating === false
+        ? null
+        : consent.participating === true
+          ? currentUser.loyalty ?? {
+            points: 0,
+            coupons: [],
+          }
+          : currentUser.loyalty,
+
+    privacy: {
+      ...currentUser.privacy,
+
+      ...(consent.personalizedOffers !== undefined && {
+        personalizedOffers: consent.personalizedOffers,
+      }),
+    },
+
+    updatedAt: new Date().toISOString(),
+  };
+
+  users[userIndex] = updatedUser;
+
+  localStorage.setItem(
+    USERS_KEY,
+    JSON.stringify(users)
+  );
+
+  return updatedUser;
+};
+
 export const setAuthToken = (token: string) => {
   localStorage.setItem(TOKEN_KEY, token);
 };

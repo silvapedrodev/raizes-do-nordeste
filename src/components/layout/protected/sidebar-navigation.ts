@@ -76,7 +76,7 @@ export const profileNavigation = [
     items: [
       {
         label: "Gerenciar consentimentos",
-        href: '#',
+        href: '/perfil/gerenciar-consentimentos',
         icon: SlidersHorizontal,
       },
     ],
