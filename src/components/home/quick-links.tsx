@@ -49,7 +49,7 @@ export const QuickLinks = () => {
                 <div className="relative w-30 h-20 md:w-25 md:h-20 flex items-center justify-center">
                   <Image
                     src={item.img}
-                    alt={item.label}
+                    alt={`Menu rápido ${item.label}`}
                     fill
                     sizes="(max-width: 768px) 120px"
                     className="object-contain"

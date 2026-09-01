@@ -76,7 +76,7 @@ export const ProductCatalog = ({ categorySlug, data, initialProducts, isSearch }
             value={order}
             onValueChange={handleSelectChanged}
           >
-            <SelectTrigger className="w-[160px] bg-gray-100">
+            <SelectTrigger aria-label="Ordenar por" className="w-[160px] bg-gray-100">
               <SelectValue placeholder="Ordenar por" />
             </SelectTrigger>
             <SelectContent>

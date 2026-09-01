@@ -48,17 +48,20 @@ export const StoreLocationSelect = () => {
           value={currentUnit.id}
           onValueChange={handleChange}
         >
-          <SelectTrigger className="w-44 font-medium text-sm bg-transparent px-0 ">
+          <SelectTrigger aria-label={`Selecionar unidade`} className="w-44 font-medium text-sm bg-transparent px-0 ">
             <SelectValue placeholder="Unidade">
               {(value: string) =>
                 units.find((unit) => unit.id === value)?.name ?? "Unidade"
               }
             </SelectValue>
           </SelectTrigger>
-          <SelectContent className="">
+          <SelectContent>
             <SelectGroup>
               {units.map((item) => (
-                <SelectItem key={item.id} value={item.id}>
+                <SelectItem
+                  key={item.id}
+                  value={item.id}
+                >
                   {item.name}
                 </SelectItem>
               ))}

@@ -42,6 +42,7 @@ export const MobileView = ({ user }: Props) => {
 
           <button
             type="button"
+            aria-label="editar"
             className="absolute bottom-0 right-0 size-6 flex items-center justify-center rounded-full bg-primary-main"
           >
             <Pencil size={14} className="stroke-white" />
@@ -49,7 +50,7 @@ export const MobileView = ({ user }: Props) => {
         </div>
 
         <div className="space-y-0.5 max-w-full overflow-hidden">
-          <h3 className="font-semibold text-lg truncate">{user.name}</h3>
+          <p className="font-semibold text-lg truncate">{user.name}</p>
           <p className="text-sm text-gray-500 truncate">{user.email}</p>
           <p className="text-sm text-gray-500">{phoneMask(user.phone)}</p>
         </div>

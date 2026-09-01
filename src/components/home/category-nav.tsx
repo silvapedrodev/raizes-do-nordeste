@@ -37,7 +37,7 @@ export const CategoryNav = () => {
             <div className="bg-gray-200 py-4 px-2 flex items-center justify-center rounded-3xl w-20 h-20 md:w-24 md:h-24 hover:bg-gray-400/50">
               <Image
                 src={item.img}
-                alt={item.label}
+                alt={`categoria ${item.label}`}
                 width={50}
                 height={50}
                 className="h-full w-auto object-contain"
