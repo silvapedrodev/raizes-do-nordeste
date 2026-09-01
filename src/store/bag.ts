@@ -6,6 +6,7 @@ type BagState = {
   // state
   bag: BagItem[]
   couponDiscount: number | null
+  couponMinValue: number | null
   couponCode: string | null
   unit: Unit | null
   fulfillment: FulfillmentType | null
@@ -14,7 +15,7 @@ type BagState = {
   addItem: (bagItem: BagItem) => void;
   removeItem: (productId: string) => void
   updateQuantity: (productId: string, quantity: number) => void;
-  setCoupon: (code: string | null, discount: number | null) => void;
+  setCoupon: (code: string | null, discount: number | null, minValue?: number | null) => void;
   setUnit: (unit: Unit | null) => void
   setFulfillment: (type: FulfillmentType | null) => void
   clearBag: () => void
@@ -23,6 +24,7 @@ type BagState = {
 export const useBagStore = create<BagState>((set) => ({
   bag: [],
   couponDiscount: null,
+  couponMinValue: null,
   couponCode: null,
   unit: null,
   fulfillment: "pickup",
@@ -56,7 +58,11 @@ export const useBagStore = create<BagState>((set) => ({
     return { bag: newBag }
   }),
 
-  setCoupon: (code, discount) => set({ couponCode: code, couponDiscount: discount }),
+  setCoupon: (code, discount, minValue = null) => set({
+    couponCode: code,
+    couponDiscount: discount,
+    couponMinValue: minValue
+  }),
 
   setUnit: (unit) => set({ unit }),
 

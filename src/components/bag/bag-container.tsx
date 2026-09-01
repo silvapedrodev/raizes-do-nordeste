@@ -8,6 +8,8 @@ import { ChevronRight, Ticket } from "lucide-react";
 import { formatPrice } from "@/utils/format-price";
 import { FinishPurchaseButton } from "@/components/bag/finish-purchase-button";
 import Link from "next/link";
+import { useEffect } from "react";
+import { toast } from "@/components/ui/toast";
 
 type Props = {
   initialBagProducts: BagListItem[];
@@ -15,7 +17,23 @@ type Props = {
 }
 
 export const BagContainer = ({ initialBagProducts, initialSubtotal }: Props) => {
-  const { bag, couponDiscount, couponCode } = useBagStore(state => state)
+  const {
+    bag,
+    couponDiscount,
+    couponCode,
+    couponMinValue,
+    setCoupon } = useBagStore(state => state)
+
+  useEffect(() => {
+    if (couponCode && couponMinValue !== null && initialSubtotal < couponMinValue) {
+      setCoupon(null, null, null);
+
+      toast.add({
+        title: "Cupom removido",
+        description: `O subtotal é menor que o valor mínimo de R$ ${couponMinValue.toFixed(2)} para este cupom.`,
+      })
+    }
+  }, [initialSubtotal, couponCode, couponMinValue, setCoupon]);
 
   const total = Math.max(0, initialSubtotal - (couponDiscount ?? 0));
 
@@ -36,7 +54,10 @@ export const BagContainer = ({ initialBagProducts, initialSubtotal }: Props) => 
       </div>
       <div className="">
         <div className="border lg:max-w-120 border-gray-200 py-6 px-4 md:py-8 md:px-6 rounded-3xl shadow-[1px_1px_8px_rgba(0,0,0,0.10)]">
-          <button className="flex w-full items-center justify-between gap-2 border border-gray-200 rounded-lg p-4 hover:bg-gray-100 text-start cursor-pointer">
+          <Link
+            href={"/sacola/cupom"}
+            className="flex w-full items-center justify-between gap-2 border border-gray-200 rounded-lg p-4 hover:bg-gray-100 text-start cursor-pointer"
+          >
             <div className="flex gap-2 items-center">
               <div>
                 <Ticket size={32} className="stroke-primary-main" />
@@ -49,7 +70,7 @@ export const BagContainer = ({ initialBagProducts, initialSubtotal }: Props) => 
             <div>
               <ChevronRight size={28} className="stroke-primary-main" />
             </div>
-          </button>
+          </Link>
           <div className="mt-6 md:mt-8">
             <h2 className="font-bold text-lg md:text-2xl">Resumo do pedido</h2>
 
