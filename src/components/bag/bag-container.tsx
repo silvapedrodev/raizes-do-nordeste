@@ -10,6 +10,7 @@ import { FinishPurchaseButton } from "@/components/bag/finish-purchase-button";
 import Link from "next/link";
 import { useEffect } from "react";
 import { toast } from "@/components/ui/toast";
+import { removeCouponAction } from "@/actions/remove-coupon";
 
 type Props = {
   initialBagProducts: BagListItem[];
@@ -27,6 +28,8 @@ export const BagContainer = ({ initialBagProducts, initialSubtotal }: Props) => 
   useEffect(() => {
     if (couponCode && couponMinValue !== null && initialSubtotal < couponMinValue) {
       setCoupon(null, null, null);
+
+      removeCouponAction();
 
       toast.add({
         title: "Cupom removido",
