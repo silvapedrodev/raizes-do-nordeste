@@ -3,22 +3,52 @@
 import { X } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { LoyaltyJoinModal } from "./loyalty-join-modal"
-import { useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
+import { getUserByToken } from "@/lib/auth-mock"
+import { useAuthStore } from "@/store/auth"
+import { LoyaltyProgramModal } from "./loyalty-program-modal"
 
 export function ModalCupom() {
+  const token = useAuthStore((state) => state.token);
+  const hydrated = useAuthStore((state) => state.hydrated);
+  const [isMember, setIsMember] = useState<boolean | null>(null);
+
   const router = useRouter()
 
-  useEffect(() => {
-    const originalStyle = window.getComputedStyle(document.body).overflow
-    document.body.style.overflow = "hidden"
-
-    return () => {
-      document.body.style.overflow = originalStyle
+  const checkLoyaltyStatus = useCallback(() => {
+    if (!token) {
+      setIsMember(false);
+      return;
     }
-  }, [])
+
+    const currentUser = getUserByToken(token);
+    setIsMember(currentUser?.loyalty !== null && currentUser?.loyalty !== undefined);
+  }, [token]);
+
+  useEffect(() => {
+    if (hydrated) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      checkLoyaltyStatus();
+    }
+  }, [hydrated, checkLoyaltyStatus]);
+
+  useEffect(() => {
+    if (isMember === false) {
+      const originalStyle = window.getComputedStyle(document.body).overflow;
+      document.body.style.overflow = "hidden";
+
+      return () => {
+        document.body.style.overflow = originalStyle;
+      };
+    }
+  }, [isMember]);
+
+  if (!hydrated || isMember === null) {
+    return null;
+  }
 
   function handleClose() {
-    router.back()
+    router.back();
   }
 
   return (
@@ -39,7 +69,10 @@ export function ModalCupom() {
         </div>
 
         <div>
-          <LoyaltyJoinModal />
+          {isMember
+            ? <LoyaltyProgramModal />
+            : <LoyaltyJoinModal />
+          }
         </div>
       </div>
     </div>
