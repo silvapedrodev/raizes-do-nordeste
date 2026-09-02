@@ -4,6 +4,7 @@ import { MOCK_COUPONS } from "@/data/coupon";
 import { getServerBag, setServerBag } from "@/lib/server-cookies";
 import z from "zod";
 import { getProductsFromList } from "./get-product-from-list";
+import { AVAILABLE_REWARDS } from "@/data/loyalty_rewards";
 
 export const applyCouponAction = async (code: string) => {
   const schema = z.object({
@@ -18,9 +19,10 @@ export const applyCouponAction = async (code: string) => {
   }
 
   // Buscar o cupom (mock ou banco real)
-  const foundCoupon = MOCK_COUPONS.find(
-    coupon => coupon.code === cleanCode
-  )
+  const foundInGeneral = MOCK_COUPONS.find(c => c.code === cleanCode);
+  const foundInRewards = AVAILABLE_REWARDS.find(r => r.code === cleanCode);
+
+  const foundCoupon = foundInGeneral || foundInRewards;
 
   if (!foundCoupon) {
     return { success: false, message: "Cupom não encontrado." };

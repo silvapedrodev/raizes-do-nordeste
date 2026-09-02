@@ -3,6 +3,8 @@
 import { applyCouponAction } from "@/actions/apply-coupon"
 import { AppButton } from "@/components/app-button"
 import { AppInput } from "@/components/app-input"
+import { isRewardCoupon, userHasClaimedCoupon } from "@/lib/loyalty-service"
+import { useAuthStore } from "@/store/auth"
 import { useBagStore } from "@/store/bag"
 import { Star, Tag, Ticket } from "lucide-react"
 import Image from "next/image"
@@ -12,6 +14,7 @@ import { useState } from "react"
 
 
 export const LoyaltyJoinModal = () => {
+  const token = useAuthStore((state) => state.token)
   const router = useRouter()
 
   const [couponInput, setCouponInput] = useState("")
@@ -26,6 +29,17 @@ export const LoyaltyJoinModal = () => {
     if (!code) {
       setCouponError("Digite o código do cupom")
       return
+    }
+
+    if (isRewardCoupon(code)) {
+      const hasClaimed = userHasClaimedCoupon(token, code)
+
+      if (!hasClaimed) {
+        setCouponError(
+          "Você precisa resgatar este cupom no Programa de Fidelidade antes de usá-lo."
+        )
+        return
+      }
     }
 
     setIsApplying(true)

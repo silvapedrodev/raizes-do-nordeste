@@ -15,7 +15,7 @@ type CreateUserData = {
 const USERS_KEY = "mock_users";
 const TOKEN_KEY = "mock_token";
 
-const getUsers = (): User[] => {
+export const getUsers = (): User[] => {
   if (typeof window === "undefined") {
     return [];
   }
@@ -27,6 +27,10 @@ const getUsers = (): User[] => {
   }
 
   return JSON.parse(users);
+};
+
+export const saveUsers = (users: User[]) => {
+  localStorage.setItem(USERS_KEY, JSON.stringify(users));
 };
 
 export const getUserByToken = (token: string | null): User | null => {
