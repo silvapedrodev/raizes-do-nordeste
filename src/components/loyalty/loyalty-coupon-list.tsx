@@ -40,7 +40,7 @@ export const LoyaltyCouponList = ({ userCoupons, userPoints, onRewardClaimed }: 
         Veja seus cupons e troque por descontos incríveis!
       </p>
 
-      <div className="mt-4 space-y-5 text-white">
+      <div className="mt-4 grid grid-cols-1 gap-5 text-white md:grid-cols-2 xl:grid-cols-3">
         {AVAILABLE_REWARDS.map((reward) => {
           const isClaimed = claimedCouponIds.includes(reward.id);
           const hasEnoughPoints = canClaimReward(userPoints, reward.requiredPoints);
