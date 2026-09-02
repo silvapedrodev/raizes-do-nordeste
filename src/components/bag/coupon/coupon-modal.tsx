@@ -24,7 +24,7 @@ export function ModalCupom() {
   return (
     <div className="fixed inset-0 z-1000 px-5 overflow-y-auto">
       <div
-        className="absolute inset-0 bg-black/50"
+        className="absolute inset-0 bg-black/50 backdrop-blur-xs"
         onClick={handleClose}
       />
 
