@@ -26,7 +26,7 @@ export const profileNavigation = [
       },
       {
         label: "Programa de Fidelidade",
-        href: '#',
+        href: '/programa-de-fidelidade',
         icon: Gift,
       },
       {

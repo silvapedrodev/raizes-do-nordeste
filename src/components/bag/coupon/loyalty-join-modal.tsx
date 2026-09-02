@@ -6,6 +6,7 @@ import { AppInput } from "@/components/app-input"
 import { useBagStore } from "@/store/bag"
 import { Star, Tag, Ticket } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
@@ -102,7 +103,9 @@ export const LoyaltyJoinModal = () => {
             </div>
           </div>
 
-          <AppButton>Quero participar</AppButton>
+          <Link href={"/programa-de-fidelidade"}>
+            <AppButton>Quero participar</AppButton>
+          </Link>
         </div>
       </div>
 

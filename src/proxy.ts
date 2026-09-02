@@ -14,5 +14,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/pedidos/:path*', '/perfil/:path*'],
+  matcher: ['/pedidos/:path*', '/perfil/:path*', '/programa-de-fidelidade'],
 }
