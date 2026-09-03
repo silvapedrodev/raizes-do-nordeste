@@ -27,8 +27,9 @@ export const LoyaltyProgramModal = () => {
   const setCoupon = useBagStore((state) => state.setCoupon);
 
   const user = token ? getUserByToken(token) : null;
-  const coupons = user?.loyalty?.coupons ?? [];
-
+  const coupons = (user?.loyalty?.coupons ?? []).filter(
+    (coupon) => new Date(coupon.expirationDate) > new Date()
+  );
   const applyCoupon = async (code: string) => {
     setIsApplying(true);
     setCouponError("");

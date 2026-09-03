@@ -25,7 +25,10 @@ export const LoyaltyCouponList = ({ userCoupons, userPoints, onRewardClaimed }: 
 
     if (result.success) {
       onRewardClaimed();
-      toast.add({ title: `Cupom ${code} copiado.` })
+      toast.add({
+        type: "success",
+        description: `Cupom ${code} copiado.`
+      })
       await navigator.clipboard.writeText(code)
     } else {
       alert(result.message);
