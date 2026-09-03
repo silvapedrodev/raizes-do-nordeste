@@ -6,32 +6,29 @@ import { AppButton } from "@/components/app-button";
 import { useAuthStore } from "@/store/auth";
 import { useBagStore } from "@/store/bag";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export const FinishPurchaseButton = () => {
   const { token, hydrated } = useAuthStore(state => state);
   const bagStore = useBagStore(state => state)
 
+  const router = useRouter();
+
   const handleFinishButton = async () => {
     if (!token || !bagStore.unit?.id) return;
 
-    const result = await finishBag(token, {
-      bag: bagStore.bag,
-      unitId: bagStore.unit.id,
-      fulfillment: bagStore.fulfillment,
-    }
-    )
+    const mockOrderId = "123456";
+    const simulateSuccess = false;
 
-    if (typeof result === "object" && result.error) {
-      alert(result.error);
-      return;
-    }
-
-    const paymentUrl = result as string;
-
+    // TODO: substituir por chamada real ao action/finishBag quando o gateway existir
     await clearBagCookie();
     bagStore.clearBag()
-    redirect(paymentUrl)
+
+    if (simulateSuccess) {
+      router.push(`/checkout/sucesso?orderId=${mockOrderId}`);
+    } else {
+      router.push(`/checkout/erro?orderId=${mockOrderId}`);
+    }
   }
 
   if (!hydrated) return null;
