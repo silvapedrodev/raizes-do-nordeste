@@ -1,4 +1,5 @@
 import { User } from "@/types/user";
+import { invalidateCoupon } from "@/lib/mock-checkout/loyalty";
 
 type CreateUserData = {
   name: string;
@@ -10,7 +11,6 @@ type CreateUserData = {
   confirmPassword: string;
   terms: boolean;
 }
-
 
 const USERS_KEY = "mock_users";
 const TOKEN_KEY = "mock_token";
@@ -105,7 +105,6 @@ export const createMockUser = (data: CreateUserData): User => {
     birthDate: data.birthDate,
     password: data.password,
 
-    orders: [],
     loyalty: null,
 
     privacy: {
@@ -270,6 +269,43 @@ export const updateUserLoyaltyConsent = (
     USERS_KEY,
     JSON.stringify(users)
   );
+
+  return updatedUser;
+};
+
+export const applyLoyaltyChanges = (
+  token: string,
+  changes: {
+    pointsToAdd?: number;
+    couponCodeToInvalidate?: string;
+  }
+): User | null => {
+  const userId = token.split("_")[2];
+  if (!userId) return null;
+
+  const users = getUsers();
+  const userIndex = users.findIndex((user) => user.id === userId);
+  if (userIndex === -1) return null;
+
+  const currentUser = users[userIndex];
+  if (!currentUser.loyalty) return currentUser; // não participa, nada a fazer
+
+  let updatedCoupons = currentUser.loyalty.coupons;
+  if (changes.couponCodeToInvalidate) {
+    updatedCoupons = invalidateCoupon(updatedCoupons, changes.couponCodeToInvalidate);
+  }
+
+  const updatedUser: User = {
+    ...currentUser,
+    loyalty: {
+      points: currentUser.loyalty.points + (changes.pointsToAdd ?? 0),
+      coupons: updatedCoupons,
+    },
+    updatedAt: new Date().toISOString(),
+  };
+
+  users[userIndex] = updatedUser;
+  saveUsers(users);
 
   return updatedUser;
 };

@@ -1,8 +1,9 @@
 "use client"
 
 import { clearBagCookie } from "@/actions/clear-bag-cookie";
-import { finishBag } from "@/actions/finish-bag";
 import { AppButton } from "@/components/app-button";
+import { getProductsByUnit } from "@/lib/menu";
+import { finishPurchase } from "@/lib/mock-checkout/finish-purchase";
 import { useAuthStore } from "@/store/auth";
 import { useBagStore } from "@/store/bag";
 import Link from "next/link";
@@ -11,23 +12,34 @@ import { useRouter } from "next/navigation";
 export const FinishPurchaseButton = () => {
   const { token, hydrated } = useAuthStore(state => state);
   const bagStore = useBagStore(state => state)
-
   const router = useRouter();
 
+  // TODO: substituir por chamada real ao action/finishBag quando o gateway existir
   const handleFinishButton = async () => {
     if (!token || !bagStore.unit?.id) return;
 
-    const mockOrderId = "123456";
-    const simulateSuccess = false;
+    const products = getProductsByUnit(bagStore.unit.id);
 
-    // TODO: substituir por chamada real ao action/finishBag quando o gateway existir
+    const result = await finishPurchase({
+      token,
+      unitId: bagStore.unit.id,
+      bagData: bagStore,
+      products,
+    });
+
+
     await clearBagCookie();
     bagStore.clearBag()
 
-    if (simulateSuccess) {
-      router.push(`/checkout/sucesso?orderId=${mockOrderId}`);
+    if (!result.success) {
+      router.push(`/checkout/erro`);
+      return;
+    }
+
+    if (result.order.status === "confirmed") {
+      router.push(`/checkout/sucesso?orderId=${encodeURIComponent(result.order.id)}`);
     } else {
-      router.push(`/checkout/erro?orderId=${mockOrderId}`);
+      router.push(`/checkout/erro?orderId=${encodeURIComponent(result.order.id)}`);
     }
   }
 

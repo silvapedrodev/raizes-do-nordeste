@@ -2,18 +2,23 @@
 
 import Link from "next/link";
 import { AppButton } from "@/components/app-button";
-import { CircleCheck, Clock, Copy, PaperBag, Store } from "lucide-react";
+import { CircleCheck, Clock, Copy, PaperBag, Store, Utensils } from "lucide-react";
 import { StatusCard } from "@/components/checkout/status-card";
 import { toast } from "@/components/ui/toast";
+import { Order } from "@/types/order";
+import { estimatePreparationTime } from "@/lib/mock-checkout/estimate-preparation-time";
+import { getUnitById } from "@/lib/mock-checkout/get-unit-by-id";
 
 
-interface Props {
-  orderId: string;
+type Props = {
+  order: Order
 }
 
-export const SuccessDetails = ({ orderId }: Props) => {
-  
-  const pickupCode = "A14P";
+export const SuccessDetails = ({ order }: Props) => {
+
+  const pickupCode = order.pickupCode ?? ""
+  const preparationTime = estimatePreparationTime(order.items);
+  const unit = getUnitById(order.unitId);
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(pickupCode)
@@ -26,7 +31,8 @@ export const SuccessDetails = ({ orderId }: Props) => {
   return (
     <div>
       <div className="flex flex-col items-center justify-center text-center">
-        <CircleCheck size={112} className="mb-4 stroke-white fill-green-600" />
+        <CircleCheck size={112} className="stroke-white fill-green-600" />
+        <p className="text-gray-500 mb-3">Pedido {order.id}</p>
         <h1 className="font-bold text-2xl">Pedido realizado com sucesso!</h1>
         <p className="mt-1 text-sm text-gray-500">
           Seu pedido já foi recebido e está sendo preparado com muito carinho.
@@ -56,19 +62,23 @@ export const SuccessDetails = ({ orderId }: Props) => {
       <div className=" md:max-w-fit mx-auto mt-12 flex flex-col gap-11 md:gap-4">
         <div className="flex flex-col divide-y md:flex-row md:divide-y-0 md:divide-x divide-gray-200 border border-gray-200 rounded-xl px-4 py-2 md:px-2 md:py-4 shadow-[1px_1px_8px_rgba(0,0,0,0.10)]">
           <StatusCard
-            icon={PaperBag}
+            icon={order.fulfillment === 'pickup'
+              ? PaperBag
+              : Utensils}
             title="Forma de recebimento"
-            label={"Retirar no balcão"}
+            label={order.fulfillment === 'pickup'
+              ? 'Retirar no balcão'
+              : 'Consumir no local'}
           />
           <StatusCard
             icon={Clock}
             title="Tempo de preparo"
-            label={"20-30 min "}
+            label={preparationTime.label}
           />
           <StatusCard
             icon={Store}
             title="Unidade"
-            label={"Jardim Paulista"}
+            label={unit?.name ?? "Unidade não encontrada"}
           />
         </div>
         <div className="flex flex-col gap-4">

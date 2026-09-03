@@ -14,10 +14,12 @@ export type OrderItem = {
   price: number;
   quantity: number;
   subtotal: number;
+  preparationTimeMinutes: number;
 };
 
 export type Order = {
   id: string;
+  userId: string;
   items: OrderItem[];
 
   unitId: string;
@@ -26,6 +28,9 @@ export type Order = {
   subtotal: number;
   discount: number;
   total: number;
+
+  pickupCode: string | null;
+  paymentAttempts: number;
 
   status: OrderStatus;
 

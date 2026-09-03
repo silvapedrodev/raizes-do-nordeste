@@ -1,5 +1,4 @@
 import { Coupon } from "@/types/bag-item";
-import { Order } from "@/types/order";
 
 export type LoyaltyAccount = {
   points: number;
@@ -26,8 +25,6 @@ export type User = {
   phone: string;
   birthDate: string;
   password: string;
-
-  orders: Order[];
 
   loyalty: LoyaltyAccount | null;
 
