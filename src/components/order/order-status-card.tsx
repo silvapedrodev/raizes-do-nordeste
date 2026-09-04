@@ -7,15 +7,15 @@ type Props = {
 const orderStatusMap: Record<OrderStatus, { label: string; className: string }> = {
   awaiting_payment: {
     label: "Aguardando pagamento",
-    className: "text-secondary-main bg-secondary-main/10",
+    className: "text-yellow-700 bg-yellow-50",
   },
   confirmed: {
     label: "Recebido",
-    className: "text-blue-600 bg-blue-600/10 border-blue-200",
+    className: "text-blue-600 bg-blue-600/10",
   },
   preparing: {
     label: "Preparando",
-    className: "text-orange-700 bg-orange-50 border-orange-200",
+    className: "text-orange-700 bg-orange-50",
   },
   ready: {
     label: "Pronto",
@@ -23,11 +23,11 @@ const orderStatusMap: Record<OrderStatus, { label: string; className: string }> 
   },
   completed: {
     label: "Entregue",
-    className: "text-green-600 bg-green-600/10",
+    className: "text-green-600 bg-green-50",
   },
   cancelled: {
     label: "Cancelado",
-    className: "text-red-600 bg-red-600/10",
+    className: "text-red-600 bg-red-50",
   },
 };
 
