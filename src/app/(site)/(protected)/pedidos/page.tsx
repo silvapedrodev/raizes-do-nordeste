@@ -1,5 +1,9 @@
+import { OrderContent } from "@/components/order/order.content";
+
 export default async function OrderPage() {
   return (
-    <div>orders</div>
+    <div>
+      <OrderContent />
+    </div>
   )
 }
