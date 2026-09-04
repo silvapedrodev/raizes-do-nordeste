@@ -1,6 +1,7 @@
 import { AVAILABLE_REWARDS } from "@/data/loyalty_rewards";
 import { User } from "@/types/user";
 import { getUserByToken, getUsers, saveUsers } from "./auth-mock";
+import { Coupon } from "@/types/bag-item";
 
 export const canClaimReward = (userPoints: number, requiredPoints: number): boolean => {
   return userPoints >= requiredPoints;
@@ -57,21 +58,53 @@ export function isRewardCoupon(code: string): boolean {
   return AVAILABLE_REWARDS.some(r => r.code.toUpperCase() === cleanCode)
 }
 
-export const userHasClaimedCoupon = (
+export const getClaimedRewardCoupon = (
   token: string | null,
   code: string
-): boolean => {
-  if (!token) return false
+): Coupon | null => {
+  if (!token) return null;
 
-  const user = getUserByToken(token)
+  const user = getUserByToken(token);
+  if (!user?.loyalty?.coupons) return null;
 
-  if (!user?.loyalty?.coupons) {
-    return false
+  const cleanCode = code.trim().toUpperCase();
+
+  return (
+    user.loyalty.coupons.find(
+      (coupon) => coupon.code.trim().toUpperCase() === cleanCode
+    ) ?? null
+  );
+};
+
+export const isCouponExpired = (coupon: Coupon): boolean => {
+  return new Date() > new Date(coupon.expirationDate);
+};
+
+export const validateRewardCouponUsage = (
+  token: string | null,
+  code: string
+): { valid: boolean; message?: string } => {
+  const cleanCode = code.trim().toUpperCase();
+
+  if (!isRewardCoupon(cleanCode)) {
+    return { valid: true };
   }
 
-  const cleanCode = code.trim().toUpperCase()
+  const claimedCoupon = getClaimedRewardCoupon(token, cleanCode);
 
-  return user.loyalty.coupons.some(
-    coupon => coupon.code.trim().toUpperCase() === cleanCode
-  )
-}
+  if (!claimedCoupon) {
+    return {
+      valid: false,
+      message: "Você precisa resgatar este cupom no Programa de Fidelidade antes de usá-lo.",
+    };
+  }
+
+  if (isCouponExpired(claimedCoupon)) {
+    return {
+      valid: false,
+      message: "Este cupom já foi utilizado ou está expirado.",
+    };
+  }
+
+  return { valid: true };
+};

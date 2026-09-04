@@ -3,7 +3,7 @@
 import { applyCouponAction } from "@/actions/apply-coupon"
 import { AppButton } from "@/components/app-button"
 import { AppInput } from "@/components/app-input"
-import { isRewardCoupon, userHasClaimedCoupon } from "@/lib/loyalty-service"
+import { validateRewardCouponUsage } from "@/lib/loyalty-service"
 import { useAuthStore } from "@/store/auth"
 import { useBagStore } from "@/store/bag"
 import { Star, Tag, Ticket } from "lucide-react"
@@ -24,29 +24,24 @@ export const LoyaltyJoinModal = () => {
   const setCoupon = useBagStore(state => state.setCoupon)
 
   const handleApplyCoupon = async () => {
-    const code = couponInput.trim().toUpperCase()
+    const code = couponInput.trim().toUpperCase();
 
     if (!code) {
-      setCouponError("Digite o código do cupom")
-      return
+      setCouponError("Digite o código do cupom");
+      return;
     }
 
-    if (isRewardCoupon(code)) {
-      const hasClaimed = userHasClaimedCoupon(token, code)
-
-      if (!hasClaimed) {
-        setCouponError(
-          "Você precisa resgatar este cupom no Programa de Fidelidade antes de usá-lo."
-        )
-        return
-      }
+    const validation = validateRewardCouponUsage(token, code);
+    if (!validation.valid) {
+      setCouponError(validation.message!);
+      return;
     }
 
-    setIsApplying(true)
-    setCouponError("")
+    setIsApplying(true);
+    setCouponError("");
 
     try {
-      const result = await applyCouponAction(code)
+      const result = await applyCouponAction(code);
 
       if (!result.success) {
         setCouponError(result.message)

@@ -14,6 +14,7 @@ import { Clock, Ticket } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { validateRewardCouponUsage } from "@/lib/loyalty-service";
 
 export const LoyaltyProgramModal = () => {
   const token = useAuthStore((state) => state.token);
@@ -75,16 +76,46 @@ export const LoyaltyProgramModal = () => {
     await applyCoupon(coupon.code);
   };
 
-  const handleApplyCouponCode = async () => {
+  const handleApplyCoupon = async () => {
     const code = couponInput.trim().toUpperCase();
 
     if (!code) {
-      setCouponError("Digite o código do cupom.");
+      setCouponError("Digite o código do cupom");
       return;
     }
 
-    await applyCoupon(code);
-  };
+    const validation = validateRewardCouponUsage(token, code);
+    if (!validation.valid) {
+      setCouponError(validation.message!);
+      return;
+    }
+
+    setIsApplying(true);
+    setCouponError("");
+
+    try {
+      const result = await applyCouponAction(code);
+
+      if (!result.success) {
+        setCouponError(result.message)
+        return
+      }
+
+      setCoupon(
+        result.couponCode ?? null,
+        result.discountValue ?? null,
+        result.minValue ?? null
+      )
+
+      router.back()
+    } catch (error) {
+      console.error(error)
+      setCouponError("Erro ao aplicar o cupom.")
+    } finally {
+      setIsApplying(false)
+    }
+  }
+
 
   return (
     <div>
@@ -186,7 +217,7 @@ export const LoyaltyProgramModal = () => {
 
           <AppButton
             className="h-12 w-fit px-6"
-            onClick={handleApplyCouponCode}
+            onClick={handleApplyCoupon}
             disabled={isApplying || !!selectedCoupon}
           >
             {isApplying ? "Aplicando..." : "Aplicar"}

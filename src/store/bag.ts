@@ -68,5 +68,10 @@ export const useBagStore = create<BagState>((set) => ({
 
   setFulfillment: (type) => set({ fulfillment: type }),
 
-  clearBag: () => set({ bag: [] })
+  clearBag: () =>
+    set({
+      bag: [],
+      couponCode: null,
+      couponDiscount: null,
+    }),
 }));
