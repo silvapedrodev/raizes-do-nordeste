@@ -11,7 +11,8 @@ export const ErrorDetails = ({ orderId }: Props) => {
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="flex flex-col items-center justify-center text-center">
-        <CircleX size={112} className="mb-4 stroke-white fill-red-600" />
+        <CircleX size={112} className="stroke-white fill-red-600" />
+        <p className="text-gray-500 mb-4">Pedido {orderId}</p>
         <h1 className="font-bold text-2xl">
           Não foi possível finalizar seu pedido
         </h1>

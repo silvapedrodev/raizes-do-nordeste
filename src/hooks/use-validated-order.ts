@@ -5,7 +5,7 @@ import { validateOrderOwnership } from "@/lib/mock-checkout/validate-order-owner
 import { useAuthStore } from "@/store/auth";
 import { Order } from "@/types/order";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 
 type UseValidatedOrderResult = {
@@ -13,33 +13,47 @@ type UseValidatedOrderResult = {
   isLoading: boolean;
 };
 
-export const useValidatedOrder = (orderId: string | null): UseValidatedOrderResult => {
-  const { hydrated, token } = useAuthStore((state) => state);
-  const router = useRouter();
-  const [order, setOrder] = useState<Order | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+export const useValidatedOrder =
+  (
+    orderId: string | null,
+    isStatusAllowed?: (status: Order["status"]) => boolean
+  ): UseValidatedOrderResult => {
+    const { hydrated, token } = useAuthStore((state) => state);
+    const router = useRouter();
+    const [order, setOrder] = useState<Order | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    if (!hydrated) return;
+    const isStatusAllowedRef = useRef(isStatusAllowed);
 
-    const user = getUserByToken(token);
+    useEffect(() => {
+      isStatusAllowedRef.current = isStatusAllowed;
+    });
 
-    if (!orderId || !user) {
-      router.replace("/");
-      return;
-    }
+    useEffect(() => {
+      if (!hydrated) return;
 
-    const result = validateOrderOwnership(orderId, user.id);
+      const user = getUserByToken(token);
 
-    if (!result.valid) {
-      router.replace("/");
-      return;
-    }
+      if (!orderId || !user) {
+        router.replace("/");
+        return;
+      }
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setOrder(result.order);
-    setIsLoading(false);
-  }, [hydrated, orderId, token, router]);
+      const result = validateOrderOwnership(orderId, user.id);
 
-  return { order, isLoading };
-};
+      if (!result.valid) {
+        router.replace("/");
+        return;
+      }
+
+      if (isStatusAllowedRef.current && !isStatusAllowedRef.current(result.order.status)) {
+        router.replace("/");
+        return;
+      }
+
+      setOrder(result.order);
+      setIsLoading(false);
+    }, [hydrated, orderId, token, router]);
+
+    return { order, isLoading };
+  };
