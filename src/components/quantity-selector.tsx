@@ -24,8 +24,8 @@ export const QuantitySelector = ({
 
   const handleMinus = async () => {
     if (quantity > 1) {
-      bagStore.updateQuantity(productId, quantity - 1);
-      await updateCookie()
+      bagStore.updateQuantity(productId, -1);
+      await updateCookie();
       return;
     }
 
@@ -40,7 +40,7 @@ export const QuantitySelector = ({
       return;
     }
 
-    bagStore.updateQuantity(productId, quantity + 1);
+    bagStore.updateQuantity(productId, 1);
     await updateCookie();
   };
 

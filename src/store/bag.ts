@@ -14,7 +14,7 @@ type BagState = {
   // actions
   addItem: (bagItem: BagItem) => void;
   removeItem: (productId: string) => void
-  updateQuantity: (productId: string, quantity: number) => void;
+  updateQuantity: (productId: string, delta: number) => void;
   setCoupon: (code: string | null, discount: number | null, minValue?: number | null) => void;
   setUnit: (unit: Unit | null) => void
   setFulfillment: (type: FulfillmentType | null) => void
@@ -49,13 +49,14 @@ export const useBagStore = create<BagState>((set) => ({
     return { bag: newBag }
   }),
 
-  updateQuantity: (productId, quantity) => set(state => {
+  updateQuantity: (productId, delta) => set(state => {
     const newBag = state.bag.map(item =>
-      (item.productId === productId)
-        ? { ...item, quantity }
+      item.productId === productId
+        ? { ...item, quantity: item.quantity + delta }
         : item
     );
-    return { bag: newBag }
+
+    return { bag: newBag };
   }),
 
   setCoupon: (code, discount, minValue = null) => set({
