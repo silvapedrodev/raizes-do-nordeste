@@ -9,15 +9,6 @@ interface AppButtonProps
   variant?: "default" | "outline"
 }
 
-type Props = {
-  children: React.ReactNode
-  icon?: LucideIcon
-  variant?: "default" | "outline"
-  type?: "button" | "reset" | "submit";
-  onClick?: () => void
-  className?: string
-}
-
 export const AppButton = ({ children, icon: Icon, variant = "default", className, ...props }: AppButtonProps) => {
   return (
     <Button
