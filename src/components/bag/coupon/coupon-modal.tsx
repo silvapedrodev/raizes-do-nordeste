@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState } from "react"
 import { getUserByToken } from "@/lib/auth-mock"
 import { useAuthStore } from "@/store/auth"
 import { LoyaltyProgramModal } from "./loyalty-program-modal"
+import { FocusTrap } from "focus-trap-react"
 
 export function ModalCupom() {
   const token = useAuthStore((state) => state.token);
@@ -57,24 +58,27 @@ export function ModalCupom() {
         className="absolute inset-0 bg-black/50 backdrop-blur-xs"
         onClick={handleClose}
       />
+      <FocusTrap
+      >
+        <div className="relative z-10 mx-auto mt-10 max-w-233 rounded-xl bg-white p-6">
+          <div className="text-end">
+            <button
+              onClick={handleClose}
+              className="text-gray-500 hover:text-gray-700 font-medium"
+            >
+              <X size={20} className="stroke-primary-main" />
+            </button>
+          </div>
 
-      <div className="relative z-10 mx-auto mt-10 max-w-233 rounded-xl bg-white p-6">
-        <div className="text-end">
-          <button
-            onClick={handleClose}
-            className="text-gray-500 hover:text-gray-700 font-medium"
-          >
-            <X size={20} className="stroke-primary-main" />
-          </button>
+          <div>
+            {isMember
+              ? <LoyaltyProgramModal />
+              : <LoyaltyJoinModal />
+            }
+          </div>
         </div>
+      </FocusTrap>
 
-        <div>
-          {isMember
-            ? <LoyaltyProgramModal />
-            : <LoyaltyJoinModal />
-          }
-        </div>
-      </div>
     </div>
   )
 }
