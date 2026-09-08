@@ -2,8 +2,9 @@ import { ImageSlider } from "@/components/product/image-slider";
 import { ProductDetails } from "@/components/product/product-details";
 import { RelatedProductsSkeleton } from "@/components/product/related-product-skeleton";
 import { RelatedProducts } from "@/components/product/related-products";
-import { getProductsForCurrentUnit } from "@/lib/get-current-unit";
-import { formatSlug } from "@/utils/normalize-text";
+import { getProductBySlug } from "@/lib/get-product";
+import { buildProductMetadata } from "@/lib/product-metadata";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
@@ -11,15 +12,18 @@ type Props = {
   params: Promise<{ slug: string }>;
 }
 
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  return buildProductMetadata(slug);
+}
+
 export default async function ProductPage({ params }: Props) {
   // TODO: Fazer consulta do produto pelo slug
   const { slug } = await params
-
-  const products = await getProductsForCurrentUnit();
-  const product = products.find((item) => formatSlug(item.slug) === formatSlug(slug))
+  const product = await getProductBySlug(slug);
 
   if (!product || product.status === "inactive") {
-    redirect('/')
+    redirect("/");
   }
 
   return (
