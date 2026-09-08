@@ -26,7 +26,6 @@ export const HeaderSearch = () => {
   const handleSearch = () => {
     if (!search.trim()) return
     const querySlug = encodeURIComponent(search.trim().toLowerCase());
-    console.log(querySlug)
     router.push(`/buscar/${querySlug}`);
   }
 
