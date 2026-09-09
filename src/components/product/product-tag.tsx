@@ -35,13 +35,12 @@ export const ProductTags = ({ tags }: ProductTagsProps) => {
     }
   }
 
-  const validTags = tags.map(getTagConfig).filter(Boolean)
-  if (validTags.length === 0) return null
-
   return (
     <div className="flex flex-wrap gap-2 items-center">
       {tags.map((tag) => {
         const config = getTagConfig(tag)
+
+        if (!config) return null
 
         return (
           <span

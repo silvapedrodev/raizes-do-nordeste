@@ -208,6 +208,7 @@ export const menus: Menu[] = [
         price: 12.90,
         available: true,
         categories: ["bebida-gelada", "pratos-do-dia"],
+        tags: ["prato do dia"]
       },
     ],
 
@@ -322,6 +323,7 @@ export const menus: Menu[] = [
         productId: "prod-020",
         available: true,
         categories: ["pratos-do-dia"],
+        tags: ["prato do dia"]
       },
       {
         id: "menu-item-048",
@@ -804,6 +806,7 @@ export const menus: Menu[] = [
         productId: "prod-018",
         available: true,
         categories: ["acompanhamentos", "pratos-do-dia"],
+        tags: ["prato do dia"]
       },
       {
         id: "menu-item-123",
@@ -839,6 +842,7 @@ export const menus: Menu[] = [
         productId: "prod-025",
         available: true,
         categories: ["pratos-principais", "pratos-do-dia"],
+        tags: ["prato do dia"]
       },
       {
         id: "menu-item-129",
@@ -1018,6 +1022,7 @@ export const menus: Menu[] = [
         price: 29.90,
         available: true,
         categories: ["cuscuz", "pratos-do-dia"],
+        tags: ["prato do dia"]
       },
       {
         id: "menu-item-156",
@@ -1108,6 +1113,7 @@ export const menus: Menu[] = [
         price: 13.90,
         available: true,
         categories: ["cafe", "especialidades", "pratos-do-dia"],
+        tags: ["prato do dia"]
       },
       {
         id: "menu-item-170",
@@ -1135,6 +1141,7 @@ export const menus: Menu[] = [
         price: 17.90,
         available: true,
         categories: ["vitamina", "pratos-do-dia"],
+        tags: ["prato do dia"]
       },
       {
         id: "menu-item-174",
@@ -1273,6 +1280,7 @@ export const menus: Menu[] = [
         price: 43.90,
         available: true,
         categories: ["pratos-principais", "pratos-do-dia"],
+        tags: ["prato do dia"]
       },
       {
         id: "menu-item-193",
@@ -1280,6 +1288,7 @@ export const menus: Menu[] = [
         price: 51.90,
         available: true,
         categories: ["pratos-principais", "pratos-do-dia"],
+        tags: ["prato do dia"]
       },
       {
         id: "menu-item-194",
@@ -1311,6 +1320,7 @@ export const menus: Menu[] = [
         price: 13.90,
         available: true,
         categories: ["especialidades", "pratos-do-dia"],
+        tags: ["prato do dia"]
       },
       {
         id: "menu-item-199",
@@ -1474,7 +1484,8 @@ export const menus: Menu[] = [
         productId: "prod-035",
         price: 7.50,
         available: true,
-        categories: ["pratos-do-dia"]
+        categories: ["pratos-do-dia"],
+        tags: ["prato do dia"]
       },
       {
         id: "menu-item-222",
@@ -1514,6 +1525,7 @@ export const menus: Menu[] = [
         price: 17.90,
         available: true,
         categories: ["bebidas-geladas", "pratos-do-dia"],
+        tags: ["prato do dia"]
       },
       {
         id: "menu-item-228",

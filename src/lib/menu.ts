@@ -14,10 +14,18 @@ export const getProductsByUnit = (unitId: string): Product[] => {
       new Set([...product.categories, ...(menuItem.categories ?? [])])
     );
 
+    const combinedTags = Array.from(
+      new Set([
+        ...(product.tags ?? []),
+        ...(menuItem.tags ?? []),
+      ])
+    );
+
     return {
       ...product,
       price: menuItem.price ?? product.price,
       categories: combinedCategories,
+      tags: combinedTags,
     };
   });
 

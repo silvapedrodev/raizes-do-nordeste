@@ -3,6 +3,7 @@ export type MenuItem = {
   productId: string;
   price?: number;
   categories?: string[];
+  tags?: string[]
   available: boolean;
 };
 

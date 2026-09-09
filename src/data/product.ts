@@ -20,7 +20,7 @@ export const products: Product[] = [
       "cafe-da-manha",
       "pratos-do-dia",
     ],
-    tags: ["mais vendido", "tradicional"],
+    tags: ["mais vendido", "tradicional", "prato do dia"],
     rating: {
       average: 4.8,
       count: 1287,
@@ -61,7 +61,8 @@ export const products: Product[] = [
     tags: [
       "mais vendido",
       "nordestino",
-      "tradicional"
+      "tradicional",
+      "prato do dia"
     ],
     rating: {
       average: 4.9,
@@ -173,7 +174,7 @@ export const products: Product[] = [
       "prato-principal",
       "pratos-do-dia",
     ],
-    tags: ["especial do dia", "nordestino"],
+    tags: ["prato do dia", "nordestino"],
     rating: {
       average: 4.8,
       count: 743,
@@ -245,6 +246,7 @@ export const products: Product[] = [
       "festa-junina",
     ],
     tags: [
+      "especial",
       "festa junina",
       "tradicional",
       "sazonal",
@@ -817,6 +819,7 @@ export const products: Product[] = [
     tags: [
       "tradicional",
       "pernambucano",
+      "prato do dia",
       "nordestino",
       "carne de sol",
       "refeicao completa",
@@ -859,6 +862,7 @@ export const products: Product[] = [
     tags: [
       "tradicional",
       "nordestino",
+      "prato do dia",
       "pernambucano",
       "carne seca",
       "jerimum",
@@ -900,6 +904,7 @@ export const products: Product[] = [
     ],
     tags: [
       "tradicional",
+      "prato do dia",
       "nordestino",
       "pernambucano",
       "charque",
@@ -1668,6 +1673,7 @@ export const products: Product[] = [
       "festa-junina",
     ],
     tags: [
+      "especial",
       "festa junina",
       "tradicional",
       "milho",
@@ -1711,6 +1717,7 @@ export const products: Product[] = [
       "festa-junina",
     ],
     tags: [
+      "especial",
       "festa junina",
       "tradicional",
       "coco",
@@ -1755,6 +1762,7 @@ export const products: Product[] = [
       "festa-junina",
     ],
     tags: [
+      "especial",
       "festa junina",
       "tradicional",
       "amendoim",
