@@ -1241,6 +1241,7 @@ export const products: Product[] = [
     },
     nutrition: {
       calories: 5,
+      protein: 0
     },
     preparationTimeMinutes: 5,
     availability: {
@@ -1278,6 +1279,7 @@ export const products: Product[] = [
     },
     nutrition: {
       calories: 5,
+      protein: 0
     },
     preparationTimeMinutes: 4,
     availability: {
@@ -1316,6 +1318,7 @@ export const products: Product[] = [
     },
     nutrition: {
       calories: 55,
+      protein: 0,
       carbohydrates: 14,
     },
     preparationTimeMinutes: 5,
@@ -1354,6 +1357,7 @@ export const products: Product[] = [
     },
     nutrition: {
       calories: 2,
+      protein: 0
     },
     preparationTimeMinutes: 6,
     availability: {
@@ -1392,6 +1396,7 @@ export const products: Product[] = [
     },
     nutrition: {
       calories: 2,
+      protein: 0
     },
     preparationTimeMinutes: 6,
     availability: {
@@ -1512,6 +1517,7 @@ export const products: Product[] = [
     },
     nutrition: {
       calories: 120,
+      protein: 1,
       carbohydrates: 28,
     },
     preparationTimeMinutes: 5,
@@ -1634,6 +1640,7 @@ export const products: Product[] = [
     },
     nutrition: {
       calories: 45,
+      protein: 1,
       carbohydrates: 9,
     },
     preparationTimeMinutes: 3,
